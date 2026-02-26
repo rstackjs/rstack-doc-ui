@@ -61,6 +61,13 @@
         "descEn": "Explore Rstack ecosystem",
         "logo": "https://assets.rspack.rs/others/assets/awesome-rspack.png",
         "url": "https://github.com/web-infra-dev/awesome-rstack"
+      },
+      {
+        "name": "Agent Skills",
+        "desc": "Coding Agents 技能",
+        "descEn": "Skills for Coding Agents",
+        "logo": "https://assets.rspack.rs/others/assets/awesome-rspack.png",
+        "url": "https://github.com/rstackjs/agent-skills"
       }
     ]
   }

@@ -43,7 +43,7 @@ export default defineConfig({
   ],
   output: {
     target: 'web',
-    externals: ['react', 'react-dom', 'react/jsx-runtime', 'framer-motion'],
+    externals: ['react', 'react-dom', 'react/jsx-runtime'],
     filename: {
       js: '[name]/index.js',
       css: '[name]/index.css',

@@ -1,4 +1,3 @@
-import { useInView } from 'react-intersection-observer';
 import { ProgressBar } from './ProgressBar';
 import styles from './index.module.scss';
 
@@ -30,11 +29,8 @@ const findMaxTime = (data: BenchmarkData) => {
 
 export function Benchmark({ data }: BenchmarkProps) {
   const maxTime = findMaxTime(data);
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-  });
   return (
-    <div className={styles.root} ref={ref}>
+    <div className={styles.root}>
       {Object.values(data).map(item => (
         <div key={item.label} className={styles.item}>
           <p className={styles.progressName}>{item.label}</p>
@@ -45,7 +41,6 @@ export function Benchmark({ data }: BenchmarkProps) {
                 value={metric.time}
                 max={maxTime}
                 desc={metric.desc}
-                inView={inView}
               />
             ))}
           </div>

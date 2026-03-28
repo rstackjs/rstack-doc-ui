@@ -1,23 +1,15 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "baseUrl": ".",
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "target": "ES2023",
+    "types": ["node"],
     "lib": ["DOM", "ESNext"],
-    "moduleResolution": "node",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    "resolveJsonModule": true,
-    "rootDir": "src",
+    "declaration": true,
+    "jsx": "react-jsx",
+    "isolatedModules": true,
     "skipLibCheck": true,
-    "strict": true
+    "moduleResolution": "bundler"
   },
-  "exclude": ["**/node_modules"],
   "include": ["src"]
 }

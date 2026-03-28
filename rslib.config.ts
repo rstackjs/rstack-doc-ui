@@ -6,7 +6,6 @@ export default defineConfig({
   plugins: [pluginReact(), pluginSass()],
   lib: [
     {
-      format: 'esm',
       syntax: 'es2018',
       autoExternal: false,
       banner: {
@@ -30,7 +29,6 @@ export default defineConfig({
     },
     // without banner
     {
-      format: 'esm',
       syntax: 'es2018',
       autoExternal: false,
       dts: true,

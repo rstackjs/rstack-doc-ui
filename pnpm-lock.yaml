@@ -45,8 +45,8 @@ importers:
         specifier: ^6.1.0
         version: 6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       chromatic:
-        specifier: ^13.3.5
-        version: 13.3.5
+        specifier: ^16.1.0
+        version: 16.1.0
       execa:
         specifier: 9.6.1
         version: 9.6.1
@@ -1451,8 +1451,8 @@ packages:
     resolution: {integrity: sha512-Qgzu8kfBvo+cA4962jnP1KkS6Dop5NS6g7R5LFYJr4b8Ub94PPQXUksCw9PvXoeXPRRddRNC5C1JQUR2SMGtnA==}
     engines: {node: '>= 14.16.0'}
 
-  chromatic@13.3.5:
-    resolution: {integrity: sha512-MzPhxpl838qJUo0A55osCF2ifwPbjcIPeElr1d4SHcjnHoIcg7l1syJDrAYK/a+PcCBrOGi06jPNpQAln5hWgw==}
+  chromatic@16.1.0:
+    resolution: {integrity: sha512-7xyOUXe8jfY6c+g9S/U/cbvzVXMjdhh9cVZYvDp8dDGonjiKSbWO1dzWApdYHIiF2xj29pvWQB7N5LT6967IDw==}
     hasBin: true
     peerDependencies:
       '@chromatic-com/cypress': ^0.*.* || ^1.0.0
@@ -4233,7 +4233,7 @@ snapshots:
       readdirp: 4.1.2
     optional: true
 
-  chromatic@13.3.5: {}
+  chromatic@16.1.0: {}
 
   chrome-trace-event@1.0.4: {}
 

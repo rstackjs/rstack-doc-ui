@@ -1,6 +1,6 @@
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
-import { defineConfig } from '@rslib/core';
+import { defineConfig, rspack } from '@rslib/core';
 
 export default defineConfig({
   plugins: [pluginReact(), pluginSass()],
@@ -8,8 +8,17 @@ export default defineConfig({
     {
       syntax: 'es2018',
       autoExternal: false,
-      banner: {
-        js: `import './index.css';`,
+      tools: {
+        rspack(config) {
+          config.plugins.push(
+            new rspack.BannerPlugin({
+              banner: `import './index.css';`,
+              raw: true,
+              // Only add CSS import to entry chunks, not rslib-runtime or split chunks
+              include: /^[a-z][\w-]*\/index\.js$/,
+            }),
+          );
+        },
       },
       dts: true,
       source: {

@@ -1,12 +1,10 @@
 :global {
   html:not(.dark) {
-    --rs-blog-avatar-link-hover-bg: rgba(249, 57, 32, 0.08);
     --rs-blog-avatar-group-ring: rgba(255, 255, 255, 0.92);
     --rs-blog-avatar-group-overflow-bg: var(--rp-c-bg-soft);
   }
 
   html.dark {
-    --rs-blog-avatar-link-hover-bg: rgba(255, 112, 77, 0.14);
     --rs-blog-avatar-group-ring: #111827;
     --rs-blog-avatar-group-overflow-bg: rgba(255, 255, 255, 0.08);
   }
@@ -93,12 +91,11 @@
 
   &:hover,
   &:focus-visible {
-    color: var(--rp-c-brand);
-    background-color: var(--rs-blog-avatar-link-hover-bg);
+    color: var(--rp-c-text-1);
   }
 
   &:focus-visible {
-    outline: 2px solid var(--rp-c-brand);
+    outline: 2px solid var(--rp-c-text-1);
     outline-offset: 2px;
   }
 

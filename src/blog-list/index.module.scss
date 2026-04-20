@@ -49,10 +49,13 @@
   overflow: hidden;
   text-decoration: none !important;
   color: var(--rp-c-text-1) !important;
+  box-sizing: border-box;
+}
+
+.interactiveCard {
   cursor: pointer;
   transition: transform 0.3s ease;
   transform-style: preserve-3d;
-  box-sizing: border-box;
 
   &:hover,
   &:focus,
@@ -128,10 +131,17 @@
   line-height: 1.6;
   flex-grow: 1;
   margin-bottom: 20px;
+}
+
+.clampedDescription {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.descriptionParagraph {
+  margin: 0;
 }
 
 /* ── Footer (authors) ── */

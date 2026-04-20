@@ -3,7 +3,8 @@ import styles from './index.module.scss';
 
 export type BlogBackButtonProps = {
   pathname: string;
-  lang?: string;
+  lang: string;
+  blogPrefix?: string;
   className?: string;
   LinkComp?: LinkComp;
 };
@@ -12,26 +13,35 @@ const getClassName = (...classNames: Array<string | undefined>) => {
   return classNames.filter(Boolean).join(' ');
 };
 
-const getBlogPrefix = (lang?: string) => {
-  return !lang || lang === 'en' ? '/blog' : `/${lang}/blog`;
+const getBlogPrefix = (lang: string, blogPrefix = '/blog') => {
+  return !lang || lang === 'en' ? `${blogPrefix}` : `/${lang}${blogPrefix}`;
 };
 
 const getLabel = (lang?: string) => {
   return lang === 'zh' ? '返回博客' : 'Back to blog';
 };
 
+const trimTrailingSlashes = (value: string) => {
+  let end = value.length;
+
+  while (end > 1 && value.charCodeAt(end - 1) === 47) {
+    end -= 1;
+  }
+
+  return value.slice(0, end) || '/';
+};
+
 export function BlogBackButton({
   pathname,
   lang,
+  blogPrefix,
   className,
   LinkComp,
 }: BlogBackButtonProps) {
-  const blogPrefix = getBlogPrefix(lang);
-  const normalizedPathname = pathname.replace(/\/+$/, '') || '/';
-  const blogIndexPath = `${blogPrefix}/`;
-  const isBlogSubpage =
-    normalizedPathname.startsWith(blogPrefix) &&
-    normalizedPathname !== blogPrefix;
+  const resolvedBlogPrefix = getBlogPrefix(lang, blogPrefix);
+  const normalizedPathname = trimTrailingSlashes(pathname);
+  const blogIndexPath = `${resolvedBlogPrefix}/`;
+  const isBlogSubpage = normalizedPathname.startsWith(`${resolvedBlogPrefix}/`);
 
   if (!isBlogSubpage) {
     return null;

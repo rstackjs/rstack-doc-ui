@@ -1,6 +1,11 @@
 import { useEffect, useRef } from 'react';
 import styles from './BorderBeam.module.scss';
 
+type ResizeSubscription = {
+  observe: (target: HTMLDivElement) => void;
+  disconnect: () => void;
+};
+
 export type BorderBeamProps = {
   color?: string;
   size?: number;
@@ -31,6 +36,9 @@ export function BorderBeam({
       return;
     }
 
+    let canvasWidth = 0;
+    let canvasHeight = 0;
+
     const updateCanvasSize = () => {
       const nextCanvas = canvasRef.current;
       const nextContainer = containerRef.current;
@@ -40,20 +48,53 @@ export function BorderBeam({
       }
 
       const { width, height } = nextContainer.getBoundingClientRect();
-      nextCanvas.width = width;
-      nextCanvas.height = height;
+
+      if (width === 0 || height === 0) {
+        canvasWidth = 0;
+        canvasHeight = 0;
+        nextCanvas.width = 0;
+        nextCanvas.height = 0;
+        return;
+      }
+
+      canvasWidth = Math.round(width);
+      canvasHeight = Math.round(height);
+
+      const devicePixelRatio = window.devicePixelRatio || 1;
+
+      nextCanvas.width = Math.max(
+        1,
+        Math.round(canvasWidth * devicePixelRatio),
+      );
+      nextCanvas.height = Math.max(
+        1,
+        Math.round(canvasHeight * devicePixelRatio),
+      );
+      context.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+      context.lineCap = 'round';
     };
 
-    const resizeObserver = new ResizeObserver(updateCanvasSize);
-    resizeObserver.observe(container);
+    const resizeSubscription: ResizeSubscription =
+      typeof ResizeObserver !== 'undefined'
+        ? new ResizeObserver(updateCanvasSize)
+        : {
+            observe: (_target: HTMLDivElement) => {
+              window.addEventListener('resize', updateCanvasSize);
+            },
+            disconnect: () => {
+              window.removeEventListener('resize', updateCanvasSize);
+            },
+          };
+
+    resizeSubscription.observe(container);
     updateCanvasSize();
 
     let animationFrameId = 0;
     const startTime = performance.now();
 
     const getCoordinatesFromDistance = (distance: number) => {
-      const width = canvas.width;
-      const height = canvas.height;
+      const width = canvasWidth;
+      const height = canvasHeight;
       const perimeter = 2 * (width + height);
       const normalizedDistance = distance % perimeter;
 
@@ -112,7 +153,7 @@ export function BorderBeam({
     };
 
     const drawPath = (start: number, end: number) => {
-      const perimeter = 2 * (canvas.width + canvas.height);
+      const perimeter = 2 * (canvasWidth + canvasHeight);
 
       if (end < start) {
         drawPathSegment(start, perimeter);
@@ -124,8 +165,13 @@ export function BorderBeam({
     };
 
     const drawBeam = (progress: number) => {
-      const width = canvas.width;
-      const height = canvas.height;
+      const width = canvasWidth;
+      const height = canvasHeight;
+
+      if (width === 0 || height === 0) {
+        return;
+      }
+
       const perimeter = 2 * (width + height);
       const beamLength = perimeter * 0.05;
       const positionStart = progress * perimeter;
@@ -142,7 +188,7 @@ export function BorderBeam({
       const elapsed = (currentTime - startTime) / 1000;
       const progress = (elapsed % duration) / duration;
 
-      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.clearRect(0, 0, canvasWidth, canvasHeight);
       drawBeam(progress);
       animationFrameId = window.requestAnimationFrame(animate);
     };
@@ -151,7 +197,7 @@ export function BorderBeam({
 
     return () => {
       window.cancelAnimationFrame(animationFrameId);
-      resizeObserver.disconnect();
+      resizeSubscription.disconnect();
     };
   }, [color, duration, size]);
 

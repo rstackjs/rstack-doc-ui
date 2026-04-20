@@ -73,7 +73,7 @@ export const BlogListStory = () => (
   <div style={{ margin: '0 auto', maxWidth: 1040, padding: 24 }}>
     <BlogList
       posts={posts}
-      locale="en-US"
+      lang="en"
       renderInlineMarkdown={renderInlineMarkdown}
       title="Blog"
       subtitle={
@@ -98,10 +98,9 @@ export const BlogListWithBackgroundStory = () => (
     <div style={{ position: 'relative', zIndex: 0 }}>
       <BlogList
         posts={posts}
-        locale="en-US"
+        lang="en"
         LinkComp={StoryLink}
         renderInlineMarkdown={renderInlineMarkdown}
-        showBackground={false}
         title="Blog"
         subtitle={
           <>

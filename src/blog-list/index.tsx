@@ -1,7 +1,6 @@
-import type { ReactNode } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 import { useMemo, useState } from 'react';
 import { type BlogAvatarAuthor, BlogAvatarGroup } from '../blog-avatar';
-import { BlogBackground } from '../blog-background';
 import { ALink, type LinkComp } from '../shared';
 import { BorderBeam } from './BorderBeam';
 import { useTiltEffect } from './useTiltEffect';
@@ -9,6 +8,10 @@ import { useTiltEffect } from './useTiltEffect';
 import styles from './index.module.scss';
 
 export type BlogDateValue = Date | string | number;
+
+export type RenderInlineMarkdown = (
+  content: string,
+) => HTMLAttributes<HTMLParagraphElement>;
 
 export type BlogListItem = {
   id?: string | number;
@@ -21,19 +24,16 @@ export type BlogListItem = {
 
 export type BlogListProps = {
   posts: BlogListItem[];
-  locale?: string;
+  lang?: string;
   className?: string;
   LinkComp?: LinkComp;
   emptyState?: ReactNode;
   dateFormatOptions?: Intl.DateTimeFormatOptions;
-  renderInlineMarkdown?: (content: string) => Record<string, unknown>;
+  renderInlineMarkdown?: RenderInlineMarkdown;
   title?: ReactNode;
   subtitle?: ReactNode;
   featured?: boolean;
   interactive?: boolean;
-  showBackground?: boolean;
-  backgroundGridSize?: number;
-  backgroundMeteorCount?: number;
 };
 
 const DEFAULT_DATE_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
@@ -76,6 +76,10 @@ const isTextContent = (value: ReactNode) => {
   return typeof value === 'string' || typeof value === 'number';
 };
 
+const hasContent = (value?: ReactNode) => {
+  return value !== undefined && value !== null;
+};
+
 const isTouchDevice = () => {
   if (typeof window === 'undefined') {
     return false;
@@ -84,42 +88,44 @@ const isTouchDevice = () => {
   return window.matchMedia('(pointer: coarse)').matches;
 };
 
-type LinkLikeProps = {
-  className: string;
-  href: string;
-  children: ReactNode;
-  target?: string;
-  rel?: string;
-  onMouseEnter?: () => void;
-  onMouseLeave?: () => void;
-  [key: `data-${string}`]: string | undefined;
-};
-
 function MarkdownishText({
   children,
   renderInlineMarkdown,
 }: {
   children: ReactNode;
-  renderInlineMarkdown?: (content: string) => Record<string, unknown>;
+  renderInlineMarkdown?: RenderInlineMarkdown;
 }) {
   if (typeof children !== 'string') {
     return <>{children}</>;
   }
 
   if (renderInlineMarkdown) {
-    return <p {...renderInlineMarkdown(children)} style={{ margin: 0 }} />;
+    const paragraphProps = renderInlineMarkdown(children);
+    const paragraphClassName = getClassName(
+      styles.descriptionParagraph,
+      paragraphProps.className,
+    );
+
+    const { children: paragraphChildren, ...restParagraphProps } =
+      paragraphProps;
+
+    return (
+      <p {...restParagraphProps} className={paragraphClassName}>
+        {paragraphChildren ?? children}
+      </p>
+    );
   }
 
-  return <p style={{ margin: 0 }}>{children}</p>;
+  return <p className={styles.descriptionParagraph}>{children}</p>;
 }
 
 type BlogCardProps = {
   post: BlogListItem;
   isFeatured: boolean;
-  Link: (props: LinkLikeProps) => JSX.Element;
+  Link: LinkComp;
   dateFormatter: Intl.DateTimeFormat;
   interactive: boolean;
-  renderInlineMarkdown?: (content: string) => Record<string, unknown>;
+  renderInlineMarkdown?: RenderInlineMarkdown;
 };
 
 function BlogCard({
@@ -131,6 +137,9 @@ function BlogCard({
   renderInlineMarkdown,
 }: BlogCardProps) {
   const normalizedDate = normalizeDate(post.date);
+  const isInteractive = interactive && Boolean(post.href);
+  const hasTitle = hasContent(post.title);
+  const hasDescription = hasContent(post.description);
   const [isHovered, setIsHovered] = useState(false);
   const titleClassName = getClassName(
     styles.title,
@@ -139,10 +148,14 @@ function BlogCard({
   const descriptionClassName = getClassName(
     styles.description,
     isFeatured && styles.featuredDescription,
+    hasDescription && isTextContent(post.description)
+      ? styles.clampedDescription
+      : undefined,
   );
   const cardClassName = getClassName(
     styles.card,
     isFeatured ? styles.featured : styles.gridItem,
+    isInteractive && styles.interactiveCard,
   );
 
   const cardContent = (
@@ -152,8 +165,8 @@ function BlogCard({
           {dateFormatter.format(normalizedDate)}
         </span>
       ) : null}
-      {post.title ? <div className={titleClassName}>{post.title}</div> : null}
-      {post.description ? (
+      {hasTitle ? <div className={titleClassName}>{post.title}</div> : null}
+      {hasDescription ? (
         <div className={descriptionClassName}>
           <MarkdownishText renderInlineMarkdown={renderInlineMarkdown}>
             {post.description}
@@ -169,7 +182,7 @@ function BlogCard({
           />
         </div>
       ) : null}
-      {interactive && isHovered ? <BorderBeam size={2} duration={3} /> : null}
+      {isInteractive && isHovered ? <BorderBeam size={2} duration={3} /> : null}
     </>
   );
 
@@ -178,30 +191,21 @@ function BlogCard({
       <Link
         className={cardClassName}
         href={post.href}
-        data-tilt-card={interactive ? 'true' : undefined}
-        onMouseEnter={interactive ? () => setIsHovered(true) : undefined}
-        onMouseLeave={interactive ? () => setIsHovered(false) : undefined}
+        data-tilt-card={isInteractive ? 'true' : undefined}
+        onMouseEnter={isInteractive ? () => setIsHovered(true) : undefined}
+        onMouseLeave={isInteractive ? () => setIsHovered(false) : undefined}
       >
         {cardContent}
       </Link>
     );
   }
 
-  return (
-    <article
-      className={cardClassName}
-      data-tilt-card={interactive ? 'true' : undefined}
-      onMouseEnter={interactive ? () => setIsHovered(true) : undefined}
-      onMouseLeave={interactive ? () => setIsHovered(false) : undefined}
-    >
-      {cardContent}
-    </article>
-  );
+  return <article className={cardClassName}>{cardContent}</article>;
 }
 
 export function BlogList({
   posts,
-  locale,
+  lang = 'en',
   className,
   LinkComp,
   emptyState,
@@ -211,16 +215,16 @@ export function BlogList({
   subtitle,
   featured = true,
   interactive = true,
-  showBackground = true,
-  backgroundGridSize = 120,
-  backgroundMeteorCount = 3,
 }: BlogListProps) {
   if (posts.length === 0) {
     return emptyState ? <>{emptyState}</> : null;
   }
 
-  const Link = (LinkComp ?? ALink) as (props: LinkLikeProps) => JSX.Element;
-  const dateFormatter = new Intl.DateTimeFormat(locale, dateFormatOptions);
+  const Link = LinkComp ?? ALink;
+  const dateFormatter = new Intl.DateTimeFormat(
+    lang === 'zh' ? 'zh-CN' : 'en-US',
+    dateFormatOptions,
+  );
   const tiltDisabled = !interactive || isTouchDevice();
 
   const featuredPost = useMemo(() => {

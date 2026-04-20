@@ -1,5 +1,15 @@
 import { useEffect, useRef } from 'react';
 
+type CanvasBounds = {
+  width: number;
+  height: number;
+};
+
+type ResizeSubscription = {
+  observe: (target: HTMLElement) => void;
+  disconnect: () => void;
+};
+
 export type MeteorsBackgroundProps = {
   gridSize?: number;
   meteorCount?: number;
@@ -22,7 +32,7 @@ class Meteor {
 
   constructor(
     private readonly gridSize: number,
-    private readonly canvas: HTMLCanvasElement,
+    private readonly bounds: CanvasBounds,
   ) {
     this.reset();
   }
@@ -41,26 +51,26 @@ class Meteor {
     switch (this.direction) {
       case Direction.UP:
         this.x =
-          Math.floor(getMiddlePosition(this.canvas.width) / this.gridSize) *
+          Math.floor(getMiddlePosition(this.bounds.width) / this.gridSize) *
           this.gridSize;
-        this.y = this.canvas.height;
+        this.y = this.bounds.height;
         break;
       case Direction.RIGHT:
         this.x = 0;
         this.y =
-          Math.floor(getMiddlePosition(this.canvas.height) / this.gridSize) *
+          Math.floor(getMiddlePosition(this.bounds.height) / this.gridSize) *
           this.gridSize;
         break;
       case Direction.DOWN:
         this.x =
-          Math.floor(getMiddlePosition(this.canvas.width) / this.gridSize) *
+          Math.floor(getMiddlePosition(this.bounds.width) / this.gridSize) *
           this.gridSize;
         this.y = 0;
         break;
       case Direction.LEFT:
-        this.x = this.canvas.width;
+        this.x = this.bounds.width;
         this.y =
-          Math.floor(getMiddlePosition(this.canvas.height) / this.gridSize) *
+          Math.floor(getMiddlePosition(this.bounds.height) / this.gridSize) *
           this.gridSize;
         break;
     }
@@ -76,13 +86,13 @@ class Meteor {
         break;
       case Direction.RIGHT:
         this.x += this.speed;
-        if (this.x > this.canvas.width) {
+        if (this.x > this.bounds.width) {
           this.reset();
         }
         break;
       case Direction.DOWN:
         this.y += this.speed;
-        if (this.y > this.canvas.height) {
+        if (this.y > this.bounds.height) {
           this.reset();
         }
         break;
@@ -154,38 +164,106 @@ export function MeteorsBackground({
       return;
     }
 
-    const setCanvasSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight * 0.65;
-    };
+    const gridCanvas = document.createElement('canvas');
+    const gridContext = gridCanvas.getContext('2d');
 
-    setCanvasSize();
-    window.addEventListener('resize', setCanvasSize);
+    if (!gridContext) {
+      return;
+    }
+
+    const bounds: CanvasBounds = {
+      width: 0,
+      height: 0,
+    };
 
     const meteors = Array.from(
       { length: meteorCount },
-      () => new Meteor(gridSize, canvas),
+      () => new Meteor(gridSize, bounds),
     );
+
+    const drawGrid = (devicePixelRatio: number) => {
+      if (bounds.width === 0 || bounds.height === 0) {
+        gridCanvas.width = 0;
+        gridCanvas.height = 0;
+        return;
+      }
+
+      gridCanvas.width = Math.max(
+        1,
+        Math.round(bounds.width * devicePixelRatio),
+      );
+      gridCanvas.height = Math.max(
+        1,
+        Math.round(bounds.height * devicePixelRatio),
+      );
+      gridContext.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+      gridContext.clearRect(0, 0, bounds.width, bounds.height);
+      gridContext.strokeStyle = 'rgba(128, 128, 128, 0.1)';
+      gridContext.lineWidth = 1;
+
+      for (let x = 0; x < bounds.width; x += gridSize) {
+        gridContext.beginPath();
+        gridContext.moveTo(x, 0);
+        gridContext.lineTo(x, bounds.height);
+        gridContext.stroke();
+      }
+
+      for (let y = 0; y < bounds.height; y += gridSize) {
+        gridContext.beginPath();
+        gridContext.moveTo(0, y);
+        gridContext.lineTo(bounds.width, y);
+        gridContext.stroke();
+      }
+    };
+
+    const setCanvasSize = () => {
+      const { width, height } = canvas.getBoundingClientRect();
+
+      if (width === 0 || height === 0) {
+        bounds.width = 0;
+        bounds.height = 0;
+        canvas.width = 0;
+        canvas.height = 0;
+        return;
+      }
+
+      bounds.width = Math.round(width);
+      bounds.height = Math.round(height);
+
+      const devicePixelRatio = window.devicePixelRatio || 1;
+
+      canvas.width = Math.max(1, Math.round(bounds.width * devicePixelRatio));
+      canvas.height = Math.max(1, Math.round(bounds.height * devicePixelRatio));
+      context.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+      drawGrid(devicePixelRatio);
+
+      for (const meteor of meteors) {
+        meteor.reset();
+      }
+    };
+
+    const resizeSubscription: ResizeSubscription =
+      typeof ResizeObserver !== 'undefined'
+        ? new ResizeObserver(setCanvasSize)
+        : {
+            observe: (_target: HTMLElement) => {
+              window.addEventListener('resize', setCanvasSize);
+            },
+            disconnect: () => {
+              window.removeEventListener('resize', setCanvasSize);
+            },
+          };
+
+    resizeSubscription.observe(canvas);
+    setCanvasSize();
 
     let animationFrameId = 0;
 
     const animate = () => {
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.strokeStyle = 'rgba(128, 128, 128, 0.1)';
-      context.lineWidth = 1;
+      context.clearRect(0, 0, bounds.width, bounds.height);
 
-      for (let x = 0; x < canvas.width; x += gridSize) {
-        context.beginPath();
-        context.moveTo(x, 0);
-        context.lineTo(x, canvas.height);
-        context.stroke();
-      }
-
-      for (let y = 0; y < canvas.height; y += gridSize) {
-        context.beginPath();
-        context.moveTo(0, y);
-        context.lineTo(canvas.width, y);
-        context.stroke();
+      if (gridCanvas.width > 0 && gridCanvas.height > 0) {
+        context.drawImage(gridCanvas, 0, 0, bounds.width, bounds.height);
       }
 
       for (const meteor of meteors) {
@@ -200,7 +278,7 @@ export function MeteorsBackground({
 
     return () => {
       window.cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('resize', setCanvasSize);
+      resizeSubscription.disconnect();
     };
   }, [gridSize, meteorCount]);
 

@@ -1,6 +1,23 @@
 import type { BlogAvatarAuthor } from '@rstack-dev/doc-ui/blog-avatar';
+import { BlogBackground } from '@rstack-dev/doc-ui/blog-background';
 import { BlogList, type BlogListItem } from '@rstack-dev/doc-ui/blog-list';
+import type { ReactNode } from 'react';
 import './index.scss';
+
+type StoryLinkProps = {
+  className: string;
+  href: string;
+  children: ReactNode;
+  target?: string;
+  rel?: string;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+  [key: `data-${string}`]: string | undefined;
+};
+
+const StoryLink = ({ children, ...props }: StoryLinkProps) => {
+  return <a {...props}>{children}</a>;
+};
 
 const renderInlineMarkdown = (content: string) => {
   return { children: content };
@@ -73,6 +90,36 @@ export const BlogListStory = () => (
         </>
       }
     />
+  </div>
+);
+
+export const BlogListWithBackgroundStory = () => (
+  <div style={{ margin: '0 auto', maxWidth: 1040, padding: 24 }}>
+    <div style={{ position: 'relative', zIndex: 0 }}>
+      <BlogList
+        posts={posts}
+        locale="en-US"
+        LinkComp={StoryLink}
+        renderInlineMarkdown={renderInlineMarkdown}
+        showBackground={false}
+        title="Blog"
+        subtitle={
+          <>
+            Release notes and official announcements from the Rstack team.
+            Follow{' '}
+            <a
+              href="https://x.com/rspack_dev"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              @rspack_dev
+            </a>{' '}
+            to stay up to date.
+          </>
+        }
+      />
+      <BlogBackground />
+    </div>
   </div>
 );
 

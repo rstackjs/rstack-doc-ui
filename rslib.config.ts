@@ -26,6 +26,7 @@ export default defineConfig({
           'nav-icon': './src/nav-icon/index.tsx',
           benchmark: './src/benchmark/index.tsx',
           'blog-avatar': './src/blog-avatar/index.tsx',
+          'blog-list': './src/blog-list/index.tsx',
           'tool-stack': './src/tool-stack/index.tsx',
           hero: './src/hero/index.tsx',
           'section-style': './src/section-style/index.tsx',

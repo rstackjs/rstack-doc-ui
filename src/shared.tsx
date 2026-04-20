@@ -5,6 +5,11 @@ type LinkProps = {
   href: string;
   children: ReactNode;
   style?: CSSProperties;
+  target?: string;
+  rel?: string;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+  [key: `data-${string}`]: string | undefined;
 };
 
 export type LinkComp = (props: LinkProps) => JSX.Element;

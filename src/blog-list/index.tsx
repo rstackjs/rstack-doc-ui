@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
 import { useMemo, useState } from 'react';
 import { type BlogAvatarAuthor, BlogAvatarGroup } from '../blog-avatar';
+import { BlogBackground } from '../blog-background';
 import { ALink, type LinkComp } from '../shared';
 import { BorderBeam } from './BorderBeam';
-import { MeteorsBackground } from './MeteorsBackground';
 import { useTiltEffect } from './useTiltEffect';
 
 import styles from './index.module.scss';
@@ -139,13 +139,9 @@ function BlogCard({
   const descriptionClassName = getClassName(
     styles.description,
     isFeatured && styles.featuredDescription,
-    post.description !== undefined && isTextContent(post.description)
-      ? styles.clampedDescription
-      : undefined,
   );
   const cardClassName = getClassName(
     styles.card,
-    interactive && styles.interactiveCard,
     isFeatured ? styles.featured : styles.gridItem,
   );
 
@@ -183,7 +179,6 @@ function BlogCard({
         className={cardClassName}
         href={post.href}
         data-tilt-card={interactive ? 'true' : undefined}
-        data-card-glow={interactive ? 'true' : undefined}
         onMouseEnter={interactive ? () => setIsHovered(true) : undefined}
         onMouseLeave={interactive ? () => setIsHovered(false) : undefined}
       >
@@ -196,7 +191,6 @@ function BlogCard({
     <article
       className={cardClassName}
       data-tilt-card={interactive ? 'true' : undefined}
-      data-card-glow={interactive ? 'true' : undefined}
       onMouseEnter={interactive ? () => setIsHovered(true) : undefined}
       onMouseLeave={interactive ? () => setIsHovered(false) : undefined}
     >
@@ -251,12 +245,6 @@ export function BlogList({
 
   return (
     <div className={getClassName(styles.blogPage, className)}>
-      {showBackground ? (
-        <MeteorsBackground
-          gridSize={backgroundGridSize}
-          meteorCount={backgroundMeteorCount}
-        />
-      ) : null}
       {title || subtitle ? (
         <header className={styles.header}>
           {title ? <h1 className={styles.pageTitle}>{title}</h1> : null}
@@ -291,6 +279,12 @@ export function BlogList({
           ))}
         </section>
       ) : null}
+      <style>{`
+      .rp-doc-layout__sidebar-placeholder { display: none; }
+      .rp-doc-layout__outline { display: none; }
+      .rp-doc-layout__doc { width: 100% !important; max-width: 100% !important; }
+      .rp-doc-layout__doc-container { margin: 0 auto; }
+      `}</style>
     </div>
   );
 }

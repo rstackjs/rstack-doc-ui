@@ -49,6 +49,10 @@
     "./antd": {
       "types": "./dist/antd/index.d.ts",
       "import": "./dist/antd/index.js"
+    },
+    "./blog-avatar": {
+      "types": "./dist/blog-avatar/index.d.ts",
+      "import": "./dist/blog-avatar/index.js"
     }
   },
   "repository": {

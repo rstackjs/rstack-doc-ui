@@ -45,6 +45,7 @@
   flex-direction: column;
   border-radius: 24px;
   background: var(--rs-blog-list-card-bg);
+  backdrop-filter: blur(1px);
   border: var(--rs-blog-list-card-border) !important;
   overflow: hidden;
   text-decoration: none !important;
@@ -135,7 +136,7 @@
 
 .clampedDescription {
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

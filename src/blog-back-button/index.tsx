@@ -63,7 +63,9 @@ export function BlogBackButton({
   const Link = LinkComp ?? ALink;
 
   return (
-    <div className={getClassName(styles.blogBackButton, className)}>
+    <div
+      className={getClassName(styles.blogBackButton, 'rp-not-doc', className)}
+    >
       <Link href={blogIndexPath} className={styles.link}>
         {getLabel(lang)}
       </Link>

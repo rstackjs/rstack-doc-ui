@@ -14,7 +14,20 @@ const getClassName = (...classNames: Array<string | undefined>) => {
 };
 
 const getBlogPrefix = (lang: string, blogPrefix = '/blog') => {
-  return !lang || lang === 'en' ? `${blogPrefix}` : `/${lang}${blogPrefix}`;
+  if (lang === 'en') {
+    return blogPrefix;
+  }
+
+  const localizedPrefix = `/${lang}`;
+
+  if (
+    blogPrefix === localizedPrefix ||
+    blogPrefix.startsWith(`${localizedPrefix}/`)
+  ) {
+    return blogPrefix;
+  }
+
+  return `${localizedPrefix}${blogPrefix}`;
 };
 
 const getLabel = (lang?: string) => {

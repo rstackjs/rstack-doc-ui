@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react';
+import type { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
 import { useMemo, useState } from 'react';
 import { type BlogAvatarAuthor, BlogAvatarGroup } from '../blog-avatar';
 import { ALink, type LinkComp } from '../shared';
@@ -9,9 +9,33 @@ import styles from './index.module.scss';
 
 export type BlogDateValue = Date | string | number;
 
+export type RenderInlineMarkdownResult =
+  | HTMLAttributes<HTMLParagraphElement>
+  | {
+      dangerouslySetInnerHTML: {
+        __html: string;
+      };
+      className?: string;
+    };
+
 export type RenderInlineMarkdown = (
   content: string,
-) => HTMLAttributes<HTMLParagraphElement>;
+) => RenderInlineMarkdownResult;
+
+const hasDangerousHtml = (
+  value: RenderInlineMarkdownResult,
+): value is Extract<
+  RenderInlineMarkdownResult,
+  { dangerouslySetInnerHTML: object }
+> => {
+  return 'dangerouslySetInnerHTML' in value;
+};
+
+type LinkLikeProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
+  className: string;
+  href: string;
+  children: ReactNode;
+};
 
 export type BlogListItem = {
   id?: string | number;
@@ -34,6 +58,7 @@ export type BlogListProps = {
   subtitle?: ReactNode;
   featured?: boolean;
   interactive?: boolean;
+  hideDocLayoutChrome?: boolean;
 };
 
 const DEFAULT_DATE_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
@@ -101,13 +126,23 @@ function MarkdownishText({
 
   if (renderInlineMarkdown) {
     const paragraphProps = renderInlineMarkdown(children);
+    const paragraphChildren = hasDangerousHtml(paragraphProps)
+      ? undefined
+      : paragraphProps.children;
     const paragraphClassName = getClassName(
       styles.descriptionParagraph,
       paragraphProps.className,
     );
 
-    const { children: paragraphChildren, ...restParagraphProps } =
-      paragraphProps;
+    if (hasDangerousHtml(paragraphProps)) {
+      return (
+        <span className={paragraphClassName}>
+          {paragraphChildren ?? children}
+        </span>
+      );
+    }
+
+    const { children: _children, ...restParagraphProps } = paragraphProps;
 
     return (
       <p {...restParagraphProps} className={paragraphClassName}>
@@ -122,7 +157,7 @@ function MarkdownishText({
 type BlogCardProps = {
   post: BlogListItem;
   isFeatured: boolean;
-  Link: LinkComp;
+  Link: (props: LinkLikeProps) => JSX.Element;
   dateFormatter: Intl.DateTimeFormat;
   interactive: boolean;
   renderInlineMarkdown?: RenderInlineMarkdown;
@@ -215,12 +250,13 @@ export function BlogList({
   subtitle,
   featured = true,
   interactive = true,
+  hideDocLayoutChrome = false,
 }: BlogListProps) {
   if (posts.length === 0) {
     return emptyState ? <>{emptyState}</> : null;
   }
 
-  const Link = LinkComp ?? ALink;
+  const Link = (LinkComp ?? ALink) as (props: LinkLikeProps) => JSX.Element;
   const dateFormatter = new Intl.DateTimeFormat(
     lang === 'zh' ? 'zh-CN' : 'en-US',
     dateFormatOptions,
@@ -283,12 +319,14 @@ export function BlogList({
           ))}
         </section>
       ) : null}
-      <style>{`
+      {hideDocLayoutChrome ? (
+        <style>{`
       .rp-doc-layout__sidebar-placeholder { display: none; }
       .rp-doc-layout__outline { display: none; }
       .rp-doc-layout__doc { width: 100% !important; max-width: 100% !important; }
       .rp-doc-layout__doc-container { margin: 0 auto; }
       `}</style>
+      ) : null}
     </div>
   );
 }

@@ -53,6 +53,18 @@
     "./blog-avatar": {
       "types": "./dist/blog-avatar/index.d.ts",
       "import": "./dist/blog-avatar/index.js"
+    },
+    "./blog-back-button": {
+      "types": "./dist/blog-back-button/index.d.ts",
+      "import": "./dist/blog-back-button/index.js"
+    },
+    "./blog-list": {
+      "types": "./dist/blog-list/index.d.ts",
+      "import": "./dist/blog-list/index.js"
+    },
+    "./blog-background": {
+      "types": "./dist/blog-background/index.d.ts",
+      "import": "./dist/blog-background/index.js"
     }
   },
   "repository": {

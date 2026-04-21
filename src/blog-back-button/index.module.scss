@@ -1,0 +1,20 @@
+.blogBackButton {
+  margin-bottom: 1rem;
+  color: var(--rp-c-text-2);
+  transition: color 0.2s ease-out;
+
+  .link {
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+  &::before {
+    content: '←';
+    margin-right: 0.5rem;
+  }
+
+  &:hover,
+  &:focus-visible {
+    color: var(--rp-c-brand);
+  }
+}

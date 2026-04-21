@@ -284,7 +284,7 @@ export function BlogList({
   });
 
   return (
-    <div className={getClassName(styles.blogPage, className)}>
+    <div className={getClassName(styles.blogPage, 'rp-not-doc', className)}>
       {title || subtitle ? (
         <header className={styles.header}>
           {title ? <h1 className={styles.pageTitle}>{title}</h1> : null}

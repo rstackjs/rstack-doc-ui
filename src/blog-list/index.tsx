@@ -71,14 +71,57 @@ const getClassName = (...classNames: Array<string | false | undefined>) => {
   return classNames.filter(Boolean).join(' ');
 };
 
+// 2025-6-26 16:00:00
+const ISO_DATE_PREFIX_RE = /^(\d{4})-(\d{2})-(\d{2})(?:$|[T\s])/;
+
+const getDatePartsFromString = (value: string) => {
+  const match = ISO_DATE_PREFIX_RE.exec(value.trim());
+
+  if (!match) {
+    return undefined;
+  }
+
+  const [, year, month, day] = match;
+
+  return {
+    year: Number(year),
+    month: Number(month),
+    day: Number(day),
+  };
+};
+
 const normalizeDate = (value?: BlogDateValue) => {
   if (value === undefined) {
     return undefined;
   }
 
-  const date = value instanceof Date ? value : new Date(value);
+  const date =
+    value instanceof Date
+      ? value
+      : typeof value === 'string'
+        ? new Date(value)
+        : new Date(value);
 
   return Number.isNaN(date.getTime()) ? undefined : date;
+};
+
+const formatBlogDate = (
+  value: BlogDateValue | undefined,
+  formatter: Intl.DateTimeFormat,
+) => {
+  if (typeof value === 'string') {
+    const dateParts = getDatePartsFromString(value);
+
+    if (dateParts) {
+      return formatter.format(
+        new Date(dateParts.year, dateParts.month - 1, dateParts.day),
+      );
+    }
+  }
+
+  const date = normalizeDate(value);
+
+  return date ? formatter.format(date) : undefined;
 };
 
 const getPostKey = (post: BlogListItem, index: number) => {
@@ -171,7 +214,7 @@ function BlogCard({
   interactive,
   renderInlineMarkdown,
 }: BlogCardProps) {
-  const normalizedDate = normalizeDate(post.date);
+  const formattedDate = formatBlogDate(post.date, dateFormatter);
   const isInteractive = interactive && Boolean(post.href);
   const hasTitle = hasContent(post.title);
   const hasDescription = hasContent(post.description);
@@ -195,10 +238,8 @@ function BlogCard({
 
   const cardContent = (
     <>
-      {normalizedDate ? (
-        <span className={styles.date}>
-          {dateFormatter.format(normalizedDate)}
-        </span>
+      {formattedDate ? (
+        <span className={styles.date}>{formattedDate}</span>
       ) : null}
       {hasTitle ? <div className={titleClassName}>{post.title}</div> : null}
       {hasDescription ? (

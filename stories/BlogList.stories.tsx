@@ -74,7 +74,7 @@ export const BlogListStory = () => (
     <BlogList
       posts={posts}
       lang="en"
-      hideDocLayoutChrome
+      hideDocLayoutSidebarAndOutline
       renderInlineMarkdown={renderInlineMarkdown}
       title="Blog"
       subtitle={
@@ -101,7 +101,7 @@ export const BlogListWithBackgroundStory = () => (
         posts={posts}
         lang="en"
         LinkComp={StoryLink}
-        hideDocLayoutChrome
+        hideDocLayoutSidebarAndOutline
         renderInlineMarkdown={renderInlineMarkdown}
         title="Blog"
         subtitle={

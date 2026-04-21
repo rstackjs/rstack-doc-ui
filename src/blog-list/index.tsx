@@ -58,7 +58,7 @@ export type BlogListProps = {
   subtitle?: ReactNode;
   featured?: boolean;
   interactive?: boolean;
-  hideDocLayoutChrome?: boolean;
+  hideDocLayoutSidebarAndOutline?: boolean;
 };
 
 const DEFAULT_DATE_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
@@ -250,7 +250,7 @@ export function BlogList({
   subtitle,
   featured = true,
   interactive = true,
-  hideDocLayoutChrome = false,
+  hideDocLayoutSidebarAndOutline = true,
 }: BlogListProps) {
   if (posts.length === 0) {
     return emptyState ? <>{emptyState}</> : null;
@@ -319,7 +319,7 @@ export function BlogList({
           ))}
         </section>
       ) : null}
-      {hideDocLayoutChrome ? (
+      {hideDocLayoutSidebarAndOutline ? (
         <style>{`
       .rp-doc-layout__sidebar-placeholder { display: none; }
       .rp-doc-layout__outline { display: none; }

@@ -292,6 +292,8 @@ export function MeteorsBackground({
         width: '100%',
         height: '65vh',
         zIndex: -1,
+        filter: 'blur(.5px)',
+        opacity: 0.8,
       }}
     />
   );

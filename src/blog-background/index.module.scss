@@ -26,9 +26,5 @@
   inset: 0;
   background: var(--rs-blog-list-frame-bg);
   background-size: 1200px;
-  opacity: 0.45;
-}
-
-:global(.dark) .blogFrame {
-  opacity: 0.35;
+  opacity: 0.15;
 }

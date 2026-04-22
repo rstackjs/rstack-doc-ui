@@ -6,7 +6,7 @@
     --rs-blog-list-card-bg:
       radial-gradient(94.38% 84.84% at 0% 2.15%, #ffffff29 0%, #fff0 100%),
       #ffffff9c;
-    --rs-blog-list-card-border: 1px solid #0e0e0f25;
+    --rs-blog-list-card-border: 1px solid #0e0e0f16;
     --rs-blog-list-card-shadow: 0 4px 24px #0e0e0f09;
   }
 
@@ -69,33 +69,6 @@
 
     * {
       text-decoration: none !important;
-    }
-  }
-}
-
-/* ── Featured Post Card ── */
-.featuredSection {
-  margin-bottom: 20px;
-
-  .featured {
-    padding: 32px 36px;
-    min-height: 240px;
-
-    .featuredTitle {
-      font-size: 28px;
-      font-weight: 700;
-      line-height: 1.25;
-      margin-bottom: 20px;
-      color: var(--rs-blog-list-title-color);
-    }
-
-    .featuredDescription {
-      font-size: 15px;
-      font-weight: 400;
-      color: var(--rs-blog-list-desc-color);
-      line-height: 1.7;
-      flex-grow: 1;
-      margin-bottom: 24px;
     }
   }
 }
@@ -172,6 +145,33 @@
   &:hover {
     text-decoration: underline !important;
   }
+}
+
+/* ── Featured Post Card ── */
+.featuredSection {
+  margin-bottom: 20px;
+}
+
+.featured {
+  padding: 32px 36px;
+  min-height: 240px;
+}
+
+.featuredTitle {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 20px;
+  color: var(--rs-blog-list-title-color);
+}
+
+.featuredDescription {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--rs-blog-list-desc-color);
+  line-height: 1.7;
+  flex-grow: 1;
+  margin-bottom: 24px;
 }
 
 /* ── Responsive: Tablet ── */

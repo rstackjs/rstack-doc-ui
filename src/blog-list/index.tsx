@@ -362,6 +362,8 @@ export function BlogList({
       ) : null}
       {hideDocLayoutSidebarAndOutline ? (
         <style>{`
+      .rp-doc > h1 { font-weight: 700; }
+      .rp-doc > p { color: var(--rs-blog-list-desc-color); }
       .rp-doc-layout__sidebar-placeholder { display: none; }
       .rp-doc-layout__outline { display: none; }
       .rp-doc-layout__doc { width: 100% !important; max-width: 100% !important; }

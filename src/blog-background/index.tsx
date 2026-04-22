@@ -18,6 +18,7 @@ export function BlogBackground({
 
   return (
     <div className={styles.blogBackground}>
+      <div className={styles.glowBackground} />
       <div className={styles.blogFrame} />
       <MeteorsBackground
         gridSize={backgroundGridSize}

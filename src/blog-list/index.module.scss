@@ -5,15 +5,15 @@
     --rs-blog-list-desc-color: var(--rp-c-text-2);
     --rs-blog-list-card-bg:
       radial-gradient(94.38% 84.84% at 0% 2.15%, #ffffff29 0%, #fff0 100%),
-      #ffffff80;
-    --rs-blog-list-card-border: 1px solid #11111314;
+      #ffffff9c;
+    --rs-blog-list-card-border: 1px solid #0e0e0f16;
   }
 
   html.dark {
     --rs-blog-list-title-color: var(--rp-c-text-0);
     --rs-blog-list-desc-color: var(--rp-c-text-2);
-    --rs-blog-list-card-bg: #ffffff08;
-    --rs-blog-list-card-border: 1px solid #ffffff0f;
+    --rs-blog-list-card-bg: #ffffff0d;
+    --rs-blog-list-card-border: 1px solid #ffffff12;
   }
 }
 

@@ -1,4 +1,4 @@
-import { MeteorsBackground } from '../blog-list/MeteorsBackground';
+import { MeteorsBackground } from './MeteorsBackground';
 import styles from './index.module.scss';
 
 export type BlogBackgroundProps = {

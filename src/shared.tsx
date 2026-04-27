@@ -1,4 +1,4 @@
-import type { AnchorHTMLAttributes, ReactNode } from 'react';
+import type { AnchorHTMLAttributes, ReactElement, ReactNode } from 'react';
 
 export type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   className: string;
@@ -6,7 +6,7 @@ export type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   children: ReactNode;
 };
 
-export type LinkComp = (props: LinkProps) => JSX.Element;
+export type LinkComp = (props: LinkProps) => ReactElement;
 
 /**
  * A backup link component, import { Link } from '@rspress/core/theme' to replace it

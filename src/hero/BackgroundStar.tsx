@@ -14,7 +14,7 @@ const BackgroundStar = ({
   pageY: number | null;
   size: number;
 }) => {
-  const ref = useRef<any>();
+  const ref = useRef<HTMLDivElement | null>(null);
   const [transformX, setTransformX] = useState<number>(0);
   const [transformY, setTransformY] = useState<number>(0);
   useEffect(() => {

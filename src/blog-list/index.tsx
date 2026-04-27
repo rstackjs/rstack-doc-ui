@@ -1,4 +1,9 @@
-import type { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
+import type {
+  AnchorHTMLAttributes,
+  HTMLAttributes,
+  ReactElement,
+  ReactNode,
+} from 'react';
 import { useMemo, useState } from 'react';
 import { type BlogAvatarAuthor, BlogAvatarGroup } from '../blog-avatar';
 import { ALink, type LinkComp } from '../shared';
@@ -200,7 +205,7 @@ function MarkdownishText({
 type BlogCardProps = {
   post: BlogListItem;
   isFeatured: boolean;
-  Link: (props: LinkLikeProps) => JSX.Element;
+  Link: (props: LinkLikeProps) => ReactElement;
   dateFormatter: Intl.DateTimeFormat;
   interactive: boolean;
   renderInlineMarkdown?: RenderInlineMarkdown;
@@ -297,7 +302,7 @@ export function BlogList({
     return emptyState ? <>{emptyState}</> : null;
   }
 
-  const Link = (LinkComp ?? ALink) as (props: LinkLikeProps) => JSX.Element;
+  const Link = (LinkComp ?? ALink) as (props: LinkLikeProps) => ReactElement;
   const dateFormatter = new Intl.DateTimeFormat(
     lang === 'zh' ? 'zh-CN' : 'en-US',
     dateFormatOptions,

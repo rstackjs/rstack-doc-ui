@@ -4,7 +4,7 @@ export const useCardAnimation = () => {
   const [pageX, setPageX] = useState<null | number>(null);
   const [pageY, setPageY] = useState<null | number>(null);
   const [isHovering, setIsHovering] = useState(false);
-  const ref = useRef<HTMLElement>();
+  const ref = useRef<HTMLElement | null>(null);
 
   const handleMove = ({ pageX, pageY }: { pageX: number; pageY: number }) => {
     setPageX(pageX);

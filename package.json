@@ -1,6 +1,6 @@
 {
   "name": "@rstack-dev/doc-ui",
-  "version": "1.12.5",
+  "version": "1.13.3",
   "type": "module",
   "types": "./dist/index.d.ts",
   "license": "MIT",
@@ -49,6 +49,22 @@
     "./antd": {
       "types": "./dist/antd/index.d.ts",
       "import": "./dist/antd/index.js"
+    },
+    "./blog-avatar": {
+      "types": "./dist/blog-avatar/index.d.ts",
+      "import": "./dist/blog-avatar/index.js"
+    },
+    "./blog-back-button": {
+      "types": "./dist/blog-back-button/index.d.ts",
+      "import": "./dist/blog-back-button/index.js"
+    },
+    "./blog-list": {
+      "types": "./dist/blog-list/index.d.ts",
+      "import": "./dist/blog-list/index.js"
+    },
+    "./blog-background": {
+      "types": "./dist/blog-background/index.d.ts",
+      "import": "./dist/blog-background/index.js"
     }
   },
   "repository": {

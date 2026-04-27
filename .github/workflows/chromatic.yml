@@ -26,7 +26,7 @@ jobs:
         run: npm install -g corepack@latest --force && corepack enable
 
       - name: Setup Node.js
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: 24.15.0
           cache: 'pnpm'
@@ -38,7 +38,7 @@ jobs:
         run: pnpm run build-storybook
 
       - name: Run Chromatic
-        uses: chromaui/action@5c6ec06f45a2117a25f07b1bf2b2f3009233fac8 # latest
+        uses: chromaui/action@cad40970f69e7a6a5bef4ddfe42c01309ba17cb1 # latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           # Use the pre-built Storybook

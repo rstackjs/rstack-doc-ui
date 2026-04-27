@@ -1,0 +1,48 @@
+:global {
+  html:not(.dark) {
+    --rs-blog-list-frame-bg:
+      linear-gradient(180deg, rgba(15, 23, 42, 0.02), transparent 72%),
+      linear-gradient(90deg, rgba(15, 23, 42, 0.025) 1px, transparent 1px),
+      linear-gradient(rgba(15, 23, 42, 0.025) 1px, transparent 1px);
+    --rs-blog-glow-bg: url('./glow-light.svg');
+  }
+
+  html.dark {
+    --rs-blog-list-frame-bg:
+      linear-gradient(180deg, rgba(148, 163, 184, 0.04), transparent 72%),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+      linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+    --rs-blog-glow-bg: url('./glow-dark.svg');
+  }
+}
+
+.blogBackground {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.blogFrame {
+  position: absolute;
+  inset: 0;
+  background: var(--rs-blog-list-frame-bg);
+  background-size: 1200px;
+  opacity: 0.15;
+}
+
+.glowBackground {
+  position: absolute;
+  inset: 0;
+  background: var(--rs-blog-glow-bg) no-repeat center 300px;
+  background-size: 1200px;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.6;
+}
+
+:global(html.dark) {
+  .glowBackground {
+    opacity: 0.2;
+  }
+}

@@ -6,9 +6,9 @@ export const useLottieAnimation = (
   isHovering: boolean,
   lottieJsonData?: string,
 ) => {
-  const ref = useRef();
+  const ref = useRef<HTMLDivElement | null>(null);
 
-  const animationRef = useRef<AnimationItem>();
+  const animationRef = useRef<AnimationItem | null>(null);
 
   useEffect(() => {
     if (!ref.current) {

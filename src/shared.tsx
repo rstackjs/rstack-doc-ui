@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { CSSProperties, ReactElement, ReactNode } from 'react';
 
 type LinkProps = {
   className: string;
@@ -7,7 +7,7 @@ type LinkProps = {
   style?: CSSProperties;
 };
 
-export type LinkComp = (props: LinkProps) => JSX.Element;
+export type LinkComp = (props: LinkProps) => ReactElement;
 
 /**
  * A backup link component, import { Link } from 'rspress/theme' to replace it

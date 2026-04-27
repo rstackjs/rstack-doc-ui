@@ -42,7 +42,7 @@ const positions = [
 ];
 
 const useMouseMove = () => {
-  const ref = useRef<any>();
+  const ref = useRef<HTMLElement | null>(null);
   const [pageX, setPageX] = useState<null | number>(null);
   const [pageY, setPageY] = useState<null | number>(null);
 

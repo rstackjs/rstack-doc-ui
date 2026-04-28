@@ -22,13 +22,14 @@ pnpm build            # Build with Rslib
 pnpm build:watch      # Watch mode
 
 # Lint (prefer file-scoped)
-pnpm lint             # Check all with Biome
-pnpm lint:fix         # Auto-fix
+pnpm lint             # Check all with Rslint + Prettier
+pnpm lint:write       # Auto-fix
+pnpm lint:fix         # Alias for lint:write
 
 # Single file commands
 npx tsc --noEmit 'path/to/file.tsx'
 npx prettier --write 'path/to/file.tsx'
-npx biome check --write 'path/to/file.tsx'
+npx rslint --fix 'path/to/file.tsx'
 ```
 
 No test framework - visual testing via Storybook.
@@ -60,10 +61,11 @@ stories/               # Storybook stories
 
 - Single quotes, trailing commas (`all`), no parens for single arrow params
 
-### Linting (Biome - `biome.json`)
+### Linting (Rslint - `rslint.config.ts`)
 
-- `noExplicitAny`: off, `noArrayIndexKey`: off
-- File naming: `camelCase`, `PascalCase`, or export name
+- Rslint uses TypeScript and React recommended rules
+- `@typescript-eslint/no-explicit-any`: off
+- Prettier handles formatting
 
 ### TypeScript
 
@@ -152,10 +154,9 @@ export default { title: 'Hero' };
 
 ## Git Hooks
 
-Pre-commit via `simple-git-hooks` + `nano-staged`:
+Pre-commit via `simple-git-hooks`:
 
-- Biome lint on JS/TS
-- Prettier format on all files
+- `pnpm run lint:write`
 
 ## Adding Components
 

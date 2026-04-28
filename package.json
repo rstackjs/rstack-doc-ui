@@ -81,26 +81,20 @@
     "prepare": "rslib && simple-git-hooks",
     "build": "rslib",
     "build:watch": "rslib -w",
-    "lint": "biome check",
-    "lint:fix": "biome check --write --unsafe",
+    "lint": "rslint && prettier -c .",
+    "lint:write": "rslint --fix && prettier -w .",
+    "lint:fix": "pnpm lint:write",
     "bump": "npx bumpp",
     "chromatic": "chromatic"
   },
-  "nano-staged": {
-    "*.{md,mdx,json,css,less,scss}": "prettier --write",
-    "*.{js,jsx,ts,tsx,mjs,cjs}": [
-      "biome check --write --formatter-enabled=false --linter-enabled=true --no-errors-on-unmatched",
-      "prettier --write"
-    ]
-  },
   "simple-git-hooks": {
-    "pre-commit": "npx nano-staged"
+    "pre-commit": "pnpm run lint:write"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
     "@rsbuild/plugin-react": "1.4.6",
     "@rsbuild/plugin-sass": "1.5.1",
     "@rslib/core": "^0.21.2",
+    "@rslint/core": "^0.5.0",
     "@rstack-dev/doc-ui": "workspace:*",
     "@storybook/addon-themes": "^10.3.5",
     "@storybook/react": "^10.3.5",
@@ -113,7 +107,6 @@
     "execa": "9.6.1",
     "fs-extra": "11.3.4",
     "lottie-web": "5.13.0",
-    "nano-staged": "^0.9.0",
     "prettier": "~3.8.3",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",

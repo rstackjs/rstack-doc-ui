@@ -4,6 +4,11 @@ import { defineConfig, rspack } from '@rslib/core';
 
 export default defineConfig({
   plugins: [pluginReact(), pluginSass()],
+  source: {
+    define: {
+      'import.meta.env': 'import.meta.env',
+    },
+  },
   lib: [
     {
       syntax: 'es2018',

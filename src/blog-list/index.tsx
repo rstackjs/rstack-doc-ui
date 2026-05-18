@@ -373,6 +373,7 @@ export function BlogList({
       .rp-doc-layout__outline { display: none; }
       .rp-doc-layout__doc { width: 100% !important; max-width: 100% !important; }
       .rp-doc-layout__doc-container { margin: 0 auto; }
+      .rspress-doc { min-height: 60vh; }
       `}</style>
       ) : null}
     </div>

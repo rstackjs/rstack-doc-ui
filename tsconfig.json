@@ -1,16 +1,15 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "baseUrl": ".",
     "declaration": true,
     "emitDeclarationOnly": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "ignoreDeprecations": "6.0",
     "isolatedModules": true,
     "jsx": "react-jsx",
     "lib": ["DOM", "ESNext"],
-    "moduleResolution": "node",
+    "module": "Preserve",
+    "moduleResolution": "Bundler",
     "paths": {
       "@/*": ["./src/*"]
     },

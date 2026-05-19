@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "baseUrl": ".",
     "declaration": true,
     "emitDeclarationOnly": true,
     "esModuleInterop": true,
@@ -9,7 +8,8 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "lib": ["DOM", "ESNext"],
-    "moduleResolution": "node",
+    "module": "Preserve",
+    "moduleResolution": "Bundler",
     "paths": {
       "@/*": ["./src/*"]
     },

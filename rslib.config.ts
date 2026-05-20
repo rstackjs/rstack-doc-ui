@@ -27,6 +27,7 @@ export default defineConfig({
           benchmark: './src/benchmark/index.tsx',
           'blog-avatar': './src/blog-avatar/index.tsx',
           'blog-back-button': './src/blog-back-button/index.tsx',
+          'blog-authors': './src/blog-authors/index.tsx',
           'blog-list': './src/blog-list/index.tsx',
           'blog-background': './src/blog-background/index.tsx',
           'tool-stack': './src/tool-stack/index.tsx',
@@ -54,7 +55,13 @@ export default defineConfig({
   ],
   output: {
     target: 'web',
-    externals: ['react', 'react-dom', 'react/jsx-runtime'],
+    externals: [
+      'react',
+      'react-dom',
+      'react/jsx-runtime',
+      '@rspress/core',
+      '@rspress/core/runtime',
+    ],
     filename: {
       js: '[name]/index.js',
       css: '[name]/index.css',

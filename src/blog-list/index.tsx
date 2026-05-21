@@ -8,6 +8,7 @@ import { useMemo, useState } from 'react';
 import { type BlogAvatarAuthor, BlogAvatarGroup } from '../blog-avatar';
 import { ALink, type LinkComp } from '../shared';
 import { BorderBeam } from './BorderBeam';
+import { renderBlogListSsgMarkdown } from './ssg-md';
 import { useTiltEffect } from './useTiltEffect';
 
 import styles from './index.module.scss';
@@ -307,6 +308,20 @@ export function BlogList({
     lang === 'zh' ? 'zh-CN' : lang || 'en-US',
     dateFormatOptions,
   );
+
+  if (import.meta.env.SSG_MD) {
+    return (
+      <>
+        {renderBlogListSsgMarkdown({
+          formatDate: value => formatBlogDate(value, dateFormatter),
+          posts,
+          subtitle,
+          title,
+        })}
+      </>
+    );
+  }
+
   const tiltDisabled = !interactive || isTouchDevice();
 
   const featuredPost = useMemo(() => {

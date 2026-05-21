@@ -304,7 +304,7 @@ export function BlogList({
 
   const Link = (LinkComp ?? ALink) as (props: LinkLikeProps) => ReactElement;
   const dateFormatter = new Intl.DateTimeFormat(
-    lang === 'zh' ? 'zh-CN' : 'en-US',
+    lang === 'zh' ? 'zh-CN' : lang || 'en-US',
     dateFormatOptions,
   );
   const tiltDisabled = !interactive || isTouchDevice();

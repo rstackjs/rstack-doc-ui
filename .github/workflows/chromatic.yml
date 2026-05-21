@@ -38,7 +38,7 @@ jobs:
         run: pnpm run build-storybook
 
       - name: Run Chromatic
-        uses: chromaui/action@cad40970f69e7a6a5bef4ddfe42c01309ba17cb1 # latest
+        uses: chromaui/action@7aca53e7aa87489020a97f633c1e7e82c12e5973 # latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           # Use the pre-built Storybook

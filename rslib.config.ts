@@ -4,6 +4,13 @@ import { defineConfig, rspack } from '@rslib/core';
 
 export default defineConfig({
   plugins: [pluginReact(), pluginSass()],
+  source: {
+    define: {
+      // Keep the Rspress SSG-MD runtime flag in library output.
+      // Consumers replace `import.meta.env.SSG_MD` in their own builds.
+      'import.meta.env': 'import.meta.env',
+    },
+  },
   lib: [
     {
       syntax: 'es2018',

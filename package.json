@@ -111,7 +111,7 @@
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
     "antd": "^6.4.3",
-    "chromatic": "^16.10.1",
+    "chromatic": "^17.0.0",
     "execa": "9.6.1",
     "fs-extra": "11.3.5",
     "lottie-web": "5.13.0",

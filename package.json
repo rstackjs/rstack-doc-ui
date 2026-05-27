@@ -4,7 +4,7 @@
   "type": "module",
   "types": "./dist/index.d.ts",
   "license": "MIT",
-  "packageManager": "pnpm@11.2.2",
+  "packageManager": "pnpm@11.3.0",
   "exports": {
     "./nav-icon": {
       "types": "./dist/nav-icon/index.d.ts",

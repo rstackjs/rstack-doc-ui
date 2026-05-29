@@ -81,7 +81,7 @@
     "dev": "pnpm run storybook",
     "build-storybook": "storybook build",
     "storybook": "storybook dev -p 6006",
-    "prepare": "rslib && simple-git-hooks",
+    "prepare": "simple-git-hooks",
     "build": "rslib",
     "build:watch": "rslib -w",
     "test": "rstest",

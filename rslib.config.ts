@@ -62,13 +62,7 @@ export default defineConfig({
   ],
   output: {
     target: 'web',
-    externals: [
-      'react',
-      'react-dom',
-      'react/jsx-runtime',
-      '@rspress/core',
-      '@rspress/core/runtime',
-    ],
+    externals: [/^react($|\/)/, /^react-dom($|\/)/, /^@rspress\/core($|\/)/],
     filename: {
       js: '[name]/index.js',
       css: '[name]/index.css',

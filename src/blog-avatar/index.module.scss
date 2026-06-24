@@ -38,13 +38,13 @@
 .nameRow {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
 }
 
 .name {
   color: var(--rp-c-text-1);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   font-weight: 600;
   line-height: 1.25rem;
   white-space: nowrap;
@@ -54,7 +54,7 @@
 
 .title {
   color: var(--rp-c-text-2);
-  font-size: 0.75rem;
+  font-size: 0.725rem;
   line-height: 1.35;
   white-space: nowrap;
   overflow: hidden;
@@ -108,7 +108,7 @@
 .group {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 20px;
+  gap: 12px 20px;
   max-width: 100%;
 }
 

@@ -1,31 +1,80 @@
-import { BlogAvatar, BlogAvatarGroup } from '@rstack-dev/doc-ui/blog-avatar';
+import {
+  BlogAvatar,
+  BlogAvatarGroup,
+  type BlogAvatarAuthor,
+} from '@rstack-dev/doc-ui/blog-avatar';
 import './index.scss';
 
-const author = {
-  name: 'Alice',
-  avatar: 'https://github.com/alice.png',
-  title: 'Frontend Engineer',
-  github: 'https://github.com/alice',
-  x: 'https://x.com/alice',
+const author: BlogAvatarAuthor = {
+  name: 'zoolsher',
+  avatar: 'https://github.com/zoolsher.png',
+  title: 'Rspack core team',
+  github: 'https://github.com/zoolsher',
+  x: 'https://x.com/zoolsher',
 };
 
-const authors = [
+const authors: BlogAvatarAuthor[] = [
   author,
   {
-    name: 'Bob',
-    avatar: 'https://github.com/bob.png',
-    title: 'Full Stack Engineer',
-    github: 'https://github.com/bob',
+    name: 'hardfist',
+    avatar: 'https://github.com/hardfist.png',
+    title: 'Rspack core team',
+    github: 'https://github.com/hardfist',
+    x: 'https://x.com/hardfist_1',
   },
   {
-    name: 'Charlie',
-    avatar: 'https://github.com/charlie.png',
-    title: 'Tech Lead',
-    x: 'https://x.com/charlie',
+    name: 'jkzing',
+    avatar: 'https://github.com/jkzing.png',
+    title: 'Rspack core team, Vue contributor',
+    github: 'https://github.com/jkzing',
+    x: 'https://x.com/zjkdddd',
   },
   {
-    name: 'Dave',
-    avatar: 'https://github.com/dave.png',
+    name: 'ahabhgk',
+    avatar: 'https://github.com/ahabhgk.png',
+    title: 'Rspack core team, webpack contributor',
+    github: 'https://github.com/ahabhgk',
+    x: 'https://x.com/ahabhgk',
+  },
+  {
+    name: 'jerrykingxyz',
+    avatar: 'https://github.com/jerrykingxyz.png',
+    title: 'Rspack core team',
+    github: 'https://github.com/jerrykingxyz',
+  },
+  {
+    name: 'Jiahan Chen',
+    avatar: 'https://github.com/chenjiahan.png',
+    title: 'Rspack core team, project lead of Vant',
+    github: 'https://github.com/chenjiahan',
+    x: 'https://x.com/jiahan_c',
+  },
+  {
+    name: 'JSerFeng',
+    avatar: 'https://github.com/JSerFeng.png',
+    title: 'Rspack core team',
+    github: 'https://github.com/JSerFeng',
+    x: 'https://x.com/JSerFeng',
+  },
+  {
+    name: '9aoy',
+    avatar: 'https://github.com/9aoy.png',
+    title: 'Rspack core team',
+    github: 'https://github.com/9aoy',
+  },
+  {
+    name: 'zackarychapple',
+    avatar: 'https://github.com/zackarychapple.png',
+    title: 'Rspack core team, CEO at ZephyrCloudIO',
+    github: 'https://github.com/zackarychapple',
+    x: 'https://x.com/Zackary_Chapple',
+  },
+  {
+    name: 'valorkin',
+    avatar: 'https://github.com/valorkin.png',
+    title: 'Rspack core team, CTO at ZephyrCloudIO',
+    github: 'https://github.com/valorkin',
+    x: 'https://x.com/valorkin',
   },
 ];
 
@@ -42,7 +91,9 @@ export const BlogAvatarGroupStory = () => (
 );
 
 export const BlogAvatarGroupCompactStory = () => (
-  <div style={{ margin: 20 }}>
+  <div style={{ display: 'grid', gap: 24, margin: 20 }}>
+    <BlogAvatarGroup authors={authors.slice(0, 2)} compact />
+    <BlogAvatarGroup authors={authors.slice(0, 8)} compact />
     <BlogAvatarGroup authors={authors} compact />
   </div>
 );

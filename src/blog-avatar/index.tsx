@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react';
 import styles from './index.module.scss';
 
-const MAX_VISIBLE_COMPACT_AUTHORS = 3;
+const MAX_COMPACT_AUTHORS_WITH_NAMES = 2;
+const MAX_VISIBLE_COMPACT_AUTHORS = 8;
 
 export type BlogAvatarLink = {
   href: string;
@@ -149,6 +150,7 @@ export function BlogAvatarGroup({
   const visibleAuthors = authors.slice(0, MAX_VISIBLE_COMPACT_AUTHORS);
   const overflowCount = authors.length - visibleAuthors.length;
   const authorNames = authors.map(author => author.name).join(', ');
+  const shouldShowNames = authors.length <= MAX_COMPACT_AUTHORS_WITH_NAMES;
 
   return (
     <div
@@ -170,7 +172,9 @@ export function BlogAvatarGroup({
           <span className={styles.compactOverflow}>+{overflowCount}</span>
         ) : null}
       </div>
-      <div className={styles.compactNames}>{authorNames}</div>
+      {shouldShowNames ? (
+        <div className={styles.compactNames}>{authorNames}</div>
+      ) : null}
     </div>
   );
 }

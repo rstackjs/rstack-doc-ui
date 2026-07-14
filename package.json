@@ -96,7 +96,7 @@
   },
   "devDependencies": {
     "@rsbuild/plugin-react": "2.1.0",
-    "@rsbuild/plugin-sass": "1.5.3",
+    "@rsbuild/plugin-sass": "2.0.1",
     "@rslib/core": "^0.23.1",
     "@rslint/core": "^0.6.4",
     "@rspress/core": "^2.0.15",

@@ -14,8 +14,8 @@ export const ToolStack: React.FC<{ lang: string }> = memo(({ lang }) => {
     {
       name: 'Rspack',
       desc: isEn
-        ? 'A high performance JavaScript bundler written in Rust, with webpack-compatible API'
-        : '基于 Rust 编写的高性能 JavaScript 打包工具，具备与 webpack 兼容的 API',
+        ? 'A fast Rust-based bundler for the web, with a modernized webpack API'
+        : '基于 Rust 编写的高性能 Web 打包工具，提供现代化的 webpack API',
       logo: 'https://assets.rspack.rs/rspack/rspack-logo.svg',
       url: 'https://rspack.rs',
       urlText: 'rspack.rs',

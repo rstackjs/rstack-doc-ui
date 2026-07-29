@@ -1,5 +1,5 @@
 import type React from 'react';
-import { memo } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import {
   descStyle,
   innerContainerStyle,
@@ -76,6 +76,79 @@ export const ToolStack: React.FC<{ lang: string }> = memo(({ lang }) => {
     },
   ];
 
+  const toolsRef = useRef<HTMLDivElement>(null);
+  const pointerRef = useRef({ x: 0, y: 0 });
+  const frameRef = useRef(0);
+
+  // Pointer-tracked edge light: updates --pointer-x/y and --pointer-strength
+  // on each card based on the cursor distance, and re-centers each card's
+  // SVG radial gradient on the cursor.
+  useEffect(() => {
+    const grid = toolsRef.current;
+    if (!grid) return;
+    const items = Array.from(grid.children) as HTMLElement[];
+
+    function clearEdgeLight() {
+      cancelAnimationFrame(frameRef.current);
+      frameRef.current = 0;
+      for (const item of items) {
+        item.style.setProperty('--pointer-strength', '0');
+        const glow = item.querySelector<SVGElement>('svg');
+        if (glow) glow.style.opacity = '0';
+      }
+    }
+
+    function renderEdgeLight() {
+      frameRef.current = 0;
+      const { x: pointerX, y: pointerY } = pointerRef.current;
+
+      for (const item of items) {
+        const rect = item.getBoundingClientRect();
+        const dx = Math.max(rect.left - pointerX, 0, pointerX - rect.right);
+        const dy = Math.max(rect.top - pointerY, 0, pointerY - rect.bottom);
+        const distance = Math.hypot(dx, dy);
+        const strength = Math.max(0, 1 - distance / 120);
+        const glow = item.querySelector<SVGElement>('svg');
+        const gradient =
+          item.querySelector<SVGRadialGradientElement>('radialGradient');
+        if (!glow || !gradient) return;
+
+        const localX = (pointerX - rect.left).toFixed(1);
+        const localY = (pointerY - rect.top).toFixed(1);
+        gradient.setAttribute('cx', localX);
+        gradient.setAttribute('cy', localY);
+        item.style.setProperty('--pointer-x', `${localX}px`);
+        item.style.setProperty('--pointer-y', `${localY}px`);
+        item.style.setProperty('--pointer-strength', strength.toFixed(3));
+        glow.style.opacity = strength.toFixed(3);
+      }
+    }
+
+    function updateEdgeLight(event: PointerEvent) {
+      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        clearEdgeLight();
+        return;
+      }
+      pointerRef.current = { x: event.clientX, y: event.clientY };
+      if (!frameRef.current) {
+        frameRef.current = requestAnimationFrame(renderEdgeLight);
+      }
+    }
+
+    window.addEventListener('pointermove', updateEdgeLight, { passive: true });
+    window.addEventListener('blur', clearEdgeLight);
+    document.documentElement.addEventListener('pointerleave', clearEdgeLight);
+    return () => {
+      cancelAnimationFrame(frameRef.current);
+      window.removeEventListener('pointermove', updateEdgeLight);
+      window.removeEventListener('blur', clearEdgeLight);
+      document.documentElement.removeEventListener(
+        'pointerleave',
+        clearEdgeLight,
+      );
+    };
+  }, []);
+
   return (
     <div className={innerContainerStyle}>
       <div className={titleAndDescStyle}>
@@ -86,8 +159,10 @@ export const ToolStack: React.FC<{ lang: string }> = memo(({ lang }) => {
             : '高性能、一体化的 JavaScript 工具链，为开发者与 Agent 打造'}
         </p>
       </div>
-      <div className={styles.tools}>
+      <div className={styles.tools} ref={toolsRef}>
         {tools.map(({ name, desc, logo, url, urlText }) => {
+          const gradientId = `rs-tool-stack-edge-gradient-${name}`;
+          const blurId = `rs-tool-stack-edge-blur-${name}`;
           return (
             <a
               target="_blank"
@@ -105,6 +180,60 @@ export const ToolStack: React.FC<{ lang: string }> = memo(({ lang }) => {
               <div className={styles.toolTitle}>{name}</div>
               <p className={styles.toolDescription}>{desc}</p>
               <div className={styles.toolUrl}>{urlText}</div>
+              <svg
+                className={styles.edgeGlow}
+                aria-hidden="true"
+                focusable="false"
+              >
+                <defs>
+                  <radialGradient
+                    id={gradientId}
+                    gradientUnits="userSpaceOnUse"
+                    cx="0"
+                    cy="0"
+                    r="130"
+                  >
+                    <stop
+                      offset="0"
+                      stopColor="var(--rs-tool-stack-brand)"
+                      stopOpacity="var(--rs-tool-stack-glow-peak)"
+                    />
+                    <stop
+                      offset="0.32"
+                      stopColor="var(--rs-tool-stack-brand)"
+                      stopOpacity="var(--rs-tool-stack-glow-mid)"
+                    />
+                    <stop
+                      offset="0.62"
+                      stopColor="var(--rs-tool-stack-brand)"
+                      stopOpacity="var(--rs-tool-stack-glow-tail)"
+                    />
+                    <stop
+                      offset="1"
+                      stopColor="var(--rs-tool-stack-brand)"
+                      stopOpacity="0"
+                    />
+                  </radialGradient>
+                  <filter
+                    id={blurId}
+                    x="-40%"
+                    y="-70%"
+                    width="180%"
+                    height="240%"
+                  >
+                    <feGaussianBlur stdDeviation="3.5" />
+                  </filter>
+                </defs>
+                <rect
+                  className={`${styles.edgeStroke} ${styles.edgeHalo}`}
+                  stroke={`url(#${gradientId})`}
+                  filter={`url(#${blurId})`}
+                />
+                <rect
+                  className={`${styles.edgeStroke} ${styles.edgeLine}`}
+                  stroke={`url(#${gradientId})`}
+                />
+              </svg>
             </a>
           );
         })}

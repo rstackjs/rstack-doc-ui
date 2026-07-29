@@ -32,28 +32,26 @@
 
 :global {
   html:not(.dark) {
-    --rs-tool-stack-shadow-color: #f9f9f9;
     --rs-tool-stack-title-color: #0b0c0e;
     --rs-tool-stack-desc-color: #8fa1b9;
 
-    --rs-tool-stack-card-stroke: rgba(143, 161, 185, 0.3);
-    --rs-tool-stack-card-gradient: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 1),
-      rgba(249, 249, 249, 0.5)
-    );
+    --rs-tool-stack-brand: #ff8a00;
+    --rs-tool-stack-card-bg: #fff;
+    --rs-tool-stack-card-shadow: 0 4px 16px
+      color-mix(in srgb, var(--rs-tool-stack-brand) 10%, transparent);
+    --rs-tool-stack-card-shadow-hover:
+      0 12px 24px
+        color-mix(in srgb, var(--rs-tool-stack-brand) 14%, transparent),
+      0 0 16px color-mix(in srgb, var(--rs-tool-stack-brand) 10%, transparent);
     --rs-tools-stack-url-color: #f93920;
   }
   html.dark {
-    --rs-tool-stack-shadow-color: #23272f;
     --rs-tool-stack-title-color: white;
     --rs-tool-stack-desc-color: #8fa1b9;
-    --rs-tool-stack-card-stroke: #23272f;
-    --rs-tool-stack-card-gradient: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0),
-      rgba(255, 255, 255, 0.03)
-    );
+    --rs-tool-stack-card-bg: #1b1f27;
+    --rs-tool-stack-card-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    --rs-tool-stack-card-shadow-hover:
+      0 12px 24px rgba(0, 0, 0, 0.45), 0 0 16px rgba(0, 0, 0, 0.3);
     --rs-tools-stack-url-color: #ff704d;
   }
 }
@@ -77,18 +75,18 @@
 
   flex-direction: column;
   align-items: start;
-  gap: 8px;
+  gap: 16px;
   align-self: stretch;
 
   // style
-  border-radius: 10px;
-  border: 1px solid var(--rs-tool-stack-card-stroke);
-  background: var(--rs-tool-stack-card-gradient);
-  transition: all 0.2s ease-out;
-
-  &:hover {
-    transform: scale3d(1.03, 1.03, 1.03);
-  }
+  border-radius: 16px;
+  background: var(--rs-tool-stack-card-bg);
+  box-shadow: var(--rs-tool-stack-card-shadow);
+  transform: translateY(0) scale(1);
+  transition:
+    transform 0.22s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.22s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform, box-shadow;
 
   .logo {
     width: 52px;
@@ -97,22 +95,13 @@
     flex-shrink: 0;
   }
 
-  .toolContent {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
   .toolTitle {
     color: var(--rs-tool-stack-title-color);
-    text-align: center;
 
     font-size: 19px;
     font-style: normal;
     font-weight: 600;
     line-height: 24px;
-    margin-top: 4px;
   }
 
   .toolDescription {
@@ -140,8 +129,9 @@
   }
 }
 
-@keyframes rotate {
-  100% {
-    transform: rotate(1turn);
+@media (hover: hover) and (pointer: fine) {
+  .tool:hover {
+    transform: translateY(-5px) scale(1.018);
+    box-shadow: var(--rs-tool-stack-card-shadow-hover);
   }
 }

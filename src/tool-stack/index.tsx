@@ -92,7 +92,7 @@ export const ToolStack: React.FC<{ lang: string }> = memo(({ lang }) => {
             <a
               target="_blank"
               rel="noreferrer"
-              className={[styles.tool, styles.rainbow].join(' ')}
+              className={styles.tool}
               key={name}
               href={url}
             >

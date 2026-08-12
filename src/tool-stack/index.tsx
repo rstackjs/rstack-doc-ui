@@ -112,3 +112,5 @@ export const ToolStack: React.FC<{ lang: string }> = memo(({ lang }) => {
     </div>
   );
 });
+
+ToolStack.displayName = 'ToolStack';

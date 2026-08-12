@@ -125,6 +125,8 @@ const FeatureItem = memo(
   },
 );
 
+FeatureItem.displayName = 'FeatureItem';
+
 export type FeatureListProps = {
   features: Feature[];
   LinkComp?: LinkComp;
@@ -145,6 +147,8 @@ const FeatureList: FC<FeatureListProps> = memo(({ LinkComp, features }) => {
     </>
   );
 });
+
+FeatureList.displayName = 'FeatureList';
 
 export type WhyRspackProps = FeatureListProps;
 

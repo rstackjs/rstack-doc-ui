@@ -5,14 +5,14 @@
     "links": [
       {
         "name": "Rspack",
-        "desc": "高性能打包工具",
+        "desc": "打包工具",
         "descEn": "Bundler",
         "logo": "https://assets.rspack.rs/rspack/rspack-logo.svg",
         "url": "https://rspack.rs"
       },
       {
         "name": "Rsbuild",
-        "desc": "开箱即用的构建工具",
+        "desc": "构建工具",
         "descEn": "Build tool",
         "logo": "https://assets.rspack.rs/rsbuild/rsbuild-logo.svg",
         "url": "https://rsbuild.rs"
@@ -54,6 +54,14 @@
         "logoScale": 0.95,
         "logo": "https://assets.rspack.rs/rslint/rslint-logo.svg",
         "url": "https://rslint.rs/"
+      },
+      {
+        "name": "Rstack CLI",
+        "desc": "统一命令行工具",
+        "descEn": "Unified CLI",
+        "logoScale": 0.7,
+        "logo": "https://assets.rspack.rs/rspack/rspack-claw-logo.svg",
+        "url": "https://rstack.rs/"
       },
       {
         "name": "Awesome Rstack",

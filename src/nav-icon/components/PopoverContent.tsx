@@ -12,15 +12,15 @@ export const PopoverContent = ({
   <div>
     <div className={style.header}>
       <a
-        href="https://github.com/web-infra-dev"
+        href="https://rstack.rs/"
         target="_blank"
         rel="noreferrer"
         className={style.title}
       >
         <img
-          src="https://assets.rspack.rs/web-infra/web-infra-logo.svg"
+          src="https://assets.rspack.rs/rspack/rspack-claw-logo.svg"
           className={style.logo}
-          alt="web-infra-logo"
+          alt="rstack-logo"
         />
         <div className={style.titleText}>Rstack</div>
       </a>

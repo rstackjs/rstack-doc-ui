@@ -59,6 +59,13 @@ export default defineConfig({
         },
       },
     },
+    {
+      source: {
+        entry: {
+          theme: './src/theme.scss',
+        },
+      },
+    },
   ],
   output: {
     target: 'web',

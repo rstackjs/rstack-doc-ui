@@ -68,7 +68,8 @@
     "./blog-background": {
       "types": "./dist/blog-background/index.d.ts",
       "import": "./dist/blog-background/index.js"
-    }
+    },
+    "./theme.css": "./dist/theme/index.css"
   },
   "repository": {
     "type": "git",

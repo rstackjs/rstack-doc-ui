@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Shared UI component library (`@rstack-dev/doc-ui`) for Rstack websites (rspack.rs, rsbuild.rs, rspress.rs).
+Shared UI component library (`@rstackjs/doc-ui`) for Rstack websites (rspack.rs, rsbuild.rs, rspress.rs).
 
 ## Tech Stack
 
@@ -144,7 +144,7 @@ export const MyComponent: FC<MyComponentProps> = ({
 
 ```typescript
 // stories/Hero.stories.tsx
-import { Hero } from '@rstack-dev/doc-ui/hero';
+import { Hero } from '@rstackjs/doc-ui/hero';
 import './index.scss';
 
 export const HeroStory = () => <Hero onClickGetStarted={() => {}} />;

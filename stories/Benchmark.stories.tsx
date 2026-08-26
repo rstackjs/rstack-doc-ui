@@ -1,4 +1,4 @@
-import { Benchmark } from '@rstack-dev/doc-ui/benchmark';
+import { Benchmark } from '@rstackjs/doc-ui/benchmark';
 import './index.scss';
 
 // Benchmark data for different cases

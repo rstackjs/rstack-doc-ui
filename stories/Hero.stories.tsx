@@ -1,5 +1,5 @@
-import { BackgroundImage } from '@rstack-dev/doc-ui/background-image';
-import { Hero } from '@rstack-dev/doc-ui/hero';
+import { BackgroundImage } from '@rstackjs/doc-ui/background-image';
+import { Hero } from '@rstackjs/doc-ui/hero';
 import './index.scss';
 
 export const HeroStory = () => {

@@ -1,4 +1,4 @@
-import { Announcement } from '@rstack-dev/doc-ui/announcement';
+import { Announcement } from '@rstackjs/doc-ui/announcement';
 import './index.scss';
 
 export const AnnouncementStory = () => (

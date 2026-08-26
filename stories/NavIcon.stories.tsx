@@ -1,4 +1,4 @@
-import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
+import { NavIcon } from '@rstackjs/doc-ui/nav-icon';
 import { userEvent, within } from '@storybook/test';
 import './index.scss';
 

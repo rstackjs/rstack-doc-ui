@@ -58,6 +58,19 @@ html:not(.dark) {
   }
 }
 
+// OverviewGroup is a card-style navigation list, so only underline links on hover.
+.rp-overview-group {
+  .rp-link,
+  .rp-link code {
+    text-decoration-line: none;
+  }
+
+  .rp-link:hover,
+  .rp-link:hover code {
+    text-decoration-line: underline;
+  }
+}
+
 .dark {
   .rp-doc {
     .rp-link {

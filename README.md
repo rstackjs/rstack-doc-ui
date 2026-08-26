@@ -4,8 +4,7 @@ Shared UI components for the Rstack websites.
 
 > [!IMPORTANT]
 > The package has been renamed from `@rstack-dev/doc-ui` to
-> `@rstackjs/doc-ui`. Update dependencies and imports to use the new package
-> name, including subpath imports such as `@rstackjs/doc-ui/hero`.
+> `@rstackjs/doc-ui`.
 
 - <http://rspack.rs>
 - <http://rsbuild.rs>

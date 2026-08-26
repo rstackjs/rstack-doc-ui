@@ -4,7 +4,7 @@ import {
   innerContainerStyle,
   titleAndDescStyle,
   titleStyle,
-} from '@rstack-dev/doc-ui/section-style';
+} from '@rstackjs/doc-ui/section-style';
 import './index.scss';
 
 const sections = [

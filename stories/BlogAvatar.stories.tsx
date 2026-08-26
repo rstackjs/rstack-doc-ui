@@ -2,7 +2,7 @@ import {
   BlogAvatar,
   BlogAvatarGroup,
   type BlogAvatarAuthor,
-} from '@rstack-dev/doc-ui/blog-avatar';
+} from '@rstackjs/doc-ui/blog-avatar';
 import './index.scss';
 
 const author: BlogAvatarAuthor = {

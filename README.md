@@ -2,6 +2,10 @@
 
 Shared UI components for the Rstack websites.
 
+> [!IMPORTANT]
+> The package has been renamed from `@rstack-dev/doc-ui` to
+> `@rstackjs/doc-ui`.
+
 - <http://rspack.rs>
 - <http://rsbuild.rs>
 - <http://rspress.rs>

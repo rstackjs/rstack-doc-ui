@@ -1,4 +1,4 @@
-import { BlogBackButton } from '@rstack-dev/doc-ui/blog-back-button';
+import { BlogBackButton } from '@rstackjs/doc-ui/blog-back-button';
 import type { ReactNode } from 'react';
 import './index.scss';
 

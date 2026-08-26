@@ -1,4 +1,4 @@
-import { type Feature, FullyFeatured } from '@rstack-dev/doc-ui/fully-featured';
+import { type Feature, FullyFeatured } from '@rstackjs/doc-ui/fully-featured';
 import './index.scss';
 import arrow from './assets/arrow.svg';
 

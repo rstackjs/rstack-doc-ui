@@ -1,8 +1,8 @@
 import {
   containerStyle,
   innerContainerStyle,
-} from '@rstack-dev/doc-ui/section-style';
-import { type Feature, WhyRspack } from '@rstack-dev/doc-ui/why-rspack';
+} from '@rstackjs/doc-ui/section-style';
+import { type Feature, WhyRspack } from '@rstackjs/doc-ui/why-rspack';
 import './index.scss';
 import CompatibleJson from './why-rspack-assets/Compatible.json';
 import Compatible from './why-rspack-assets/Compatible.svg';

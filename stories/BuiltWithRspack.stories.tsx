@@ -1,5 +1,5 @@
-import type { Company } from '@rstack-dev/doc-ui/built-with-rspack';
-import { BuiltWithRspack } from '@rstack-dev/doc-ui/built-with-rspack';
+import type { Company } from '@rstackjs/doc-ui/built-with-rspack';
+import { BuiltWithRspack } from '@rstackjs/doc-ui/built-with-rspack';
 import './index.scss';
 import amazonLogo from './assets/amazon.svg';
 import bitDevLogo from './assets/bit.svg';

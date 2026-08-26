@@ -1,6 +1,6 @@
-import type { BlogAvatarAuthor } from '@rstack-dev/doc-ui/blog-avatar';
-import { BlogBackground } from '@rstack-dev/doc-ui/blog-background';
-import { BlogList, type BlogListItem } from '@rstack-dev/doc-ui/blog-list';
+import type { BlogAvatarAuthor } from '@rstackjs/doc-ui/blog-avatar';
+import { BlogBackground } from '@rstackjs/doc-ui/blog-background';
+import { BlogList, type BlogListItem } from '@rstackjs/doc-ui/blog-list';
 import type { ReactNode } from 'react';
 import './index.scss';
 

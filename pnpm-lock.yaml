@@ -23,7 +23,7 @@ importers:
       '@rspress/core':
         specifier: ^2.0.19
         version: 2.0.19(@rspack/core@2.1.10(@swc/helpers@0.5.23))(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@8.1.1))(supports-color@8.1.1)
-      '@rstack-dev/doc-ui':
+      '@rstackjs/doc-ui':
         specifier: workspace:*
         version: 'link:'
       '@rstest/adapter-rslib':

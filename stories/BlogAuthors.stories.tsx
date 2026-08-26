@@ -1,5 +1,5 @@
-import { BlogBackButton } from '@rstack-dev/doc-ui/blog-back-button';
-import { BlogAuthors } from '@rstack-dev/doc-ui/blog-authors';
+import { BlogBackButton } from '@rstackjs/doc-ui/blog-back-button';
+import { BlogAuthors } from '@rstackjs/doc-ui/blog-authors';
 import { PageContext } from '@rspress/core/runtime';
 import './index.scss';
 

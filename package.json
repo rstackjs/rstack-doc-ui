@@ -1,5 +1,5 @@
 {
-  "name": "@rstack-dev/doc-ui",
+  "name": "@rstackjs/doc-ui",
   "version": "1.14.8",
   "type": "module",
   "license": "MIT",
@@ -100,7 +100,7 @@
     "@rslib/core": "^0.23.2",
     "@rslint/core": "^0.8.0",
     "@rspress/core": "^2.0.19",
-    "@rstack-dev/doc-ui": "workspace:*",
+    "@rstackjs/doc-ui": "workspace:*",
     "@rstest/adapter-rslib": "^0.11.8",
     "@rstest/core": "^0.11.8",
     "@storybook/addon-themes": "^10.5.8",

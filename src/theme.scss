@@ -56,6 +56,22 @@ html:not(.dark) {
       border-bottom: none !important;
     }
   }
+
+  // Do not underline links in headings
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    .rp-link,
+    .rp-link code {
+      text-decoration-line: none;
+
+      &:hover {
+        text-decoration-line: underline;
+      }
+    }
+  }
 }
 
 // OverviewGroup is a card-style navigation list, so only underline links on hover.

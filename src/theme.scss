@@ -82,3 +82,8 @@ html:not(.dark) {
     }
   }
 }
+
+// Remove the default border for links in containers
+.rp-callout__content a {
+  border-bottom: none;
+}

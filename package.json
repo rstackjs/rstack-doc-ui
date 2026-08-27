@@ -1,6 +1,6 @@
 {
   "name": "@rstackjs/doc-ui",
-  "version": "1.14.10",
+  "version": "1.14.11",
   "type": "module",
   "license": "MIT",
   "packageManager": "pnpm@11.21.0",

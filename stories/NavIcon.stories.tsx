@@ -1,5 +1,5 @@
 import { NavIcon } from '@rstackjs/doc-ui/nav-icon';
-import { userEvent, within } from '@storybook/test';
+import { userEvent, within } from 'storybook/test';
 import './index.scss';
 
 export const NavIconStory = () => (

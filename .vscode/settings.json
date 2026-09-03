@@ -22,16 +22,6 @@
   "files.insertFinalNewline": true,
   //
   "cSpell.diagnosticLevel": "Hint",
-  "eslint.run": "onType",
-  "eslint.probe": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue"
-  ],
-  "eslint.format.enable": true,
-  "eslint.lintTask.enable": true,
   "javascript.validate.enable": false,
   "typescript.validate.enable": true,
   "css.validate": false,
@@ -53,9 +43,9 @@
     "editor.formatOnSave": true
   },
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.rslint": "explicit"
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "rstack.rstack",
   "javascript.format.enable": false,
   "typescript.format.enable": false,
   //

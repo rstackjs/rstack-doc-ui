@@ -1,7 +1,6 @@
 allowBuilds:
   core-js: false
   esbuild: false
-  simple-git-hooks: false
 
 minimumReleaseAgeExclude:
   - '@rsbuild/*'

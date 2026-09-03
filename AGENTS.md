@@ -4,12 +4,18 @@ Shared UI component library (`@rstackjs/doc-ui`) for Rstack websites (rspack.rs,
 
 ## Tech Stack
 
-- React 18 + TypeScript 5.9 (strict mode)
-- Build: Rslib (based on Rsbuild)
+- React 19 + TypeScript 7 (strict mode)
+- Toolchain: Rstack CLI (`rs lib`, Rstest, Rslint, and formatting)
 - Styling: SCSS Modules (`.module.scss`)
 - Animation: Framer Motion, Lottie
 - UI: Ant Design 6
 - Dev: Storybook 10
+
+For Rstack CLI behavior:
+
+- Read the docs linked from `node_modules/rstack/docs/llms.txt` when needed
+- Online docs: https://rstack.rs/llms.txt
+- Run `rs -h` for CLI help
 
 ## Commands
 
@@ -17,55 +23,49 @@ Shared UI component library (`@rstackjs/doc-ui`) for Rstack websites (rspack.rs,
 # Development
 pnpm dev              # Start Storybook (port 6006)
 
-# Build
-pnpm build            # Build with Rslib
-pnpm build:watch      # Watch mode
+# Build and test
+pnpm build            # Build the library with Rstack CLI
+pnpm build:watch      # Build in watch mode
+pnpm test             # Run Rstest
 
-# Lint (prefer file-scoped)
-pnpm lint             # Check all with Rslint + Prettier
-pnpm lint:write       # Auto-fix
-pnpm lint:fix         # Alias for lint:write
-
-# Single file commands
-npx tsc --noEmit 'path/to/file.tsx'
-npx prettier --write 'path/to/file.tsx'
-npx rslint --fix 'path/to/file.tsx'
+# Checks and formatting
+pnpm check            # Run lint and formatting checks
+pnpm lint             # Run Rslint
+pnpm format           # Format files
 ```
-
-No test framework - visual testing via Storybook.
 
 ## Project Structure
 
 ```
 src/
 ├── announcement/       # Announcement banner
-├── antd/              # Ant Design wrappers
-├── background-image/  # Background component
-├── benchmark/         # Benchmark display
-├── built-with-rspack/ # Showcase component
-├── fully-featured/    # Feature list
-├── hero/              # Hero section
-├── nav-icon/          # Nav icon with popover
-├── section-style/     # Section utilities
-├── tool-stack/        # Tool stack display
-├── why-rspack/        # Feature cards
-├── env.d.ts           # Type declarations
-└── shared.tsx         # Shared utilities
+├── antd/               # Ant Design wrappers
+├── background-image/   # Background component
+├── benchmark/          # Benchmark display
+├── built-with-rspack/  # Showcase component
+├── fully-featured/     # Feature list
+├── hero/               # Hero section
+├── nav-icon/           # Nav icon with popover
+├── section-style/      # Section utilities
+├── tool-stack/         # Tool stack display
+├── why-rspack/         # Feature cards
+├── env.d.ts            # Type declarations
+└── shared.tsx          # Shared utilities
 
-stories/               # Storybook stories
+stories/                # Storybook stories
 ```
 
 ## Code Style
 
-### Formatting (Prettier - `.prettierrc`)
+### Formatting (`define.fmt` in `rstack.config.ts`)
 
 - Single quotes, trailing commas (`all`), no parens for single arrow params
 
-### Linting (Rslint - `rslint.config.ts`)
+### Linting (`define.lint` in `rstack.config.ts`)
 
 - Rslint uses TypeScript and React recommended rules
 - `@typescript-eslint/no-explicit-any`: off
-- Prettier handles formatting
+- `react/react-in-jsx-scope`: off
 
 ### TypeScript
 
@@ -154,16 +154,14 @@ export default { title: 'Hero' };
 
 ## Git Hooks
 
-Pre-commit via `simple-git-hooks`:
-
-- `pnpm run lint:write`
+Rstack CLI installs repository hooks from `.rstack/hooks`. The pre-commit hook runs `rs staged`.
 
 ## Adding Components
 
 1. Create `src/component-name/index.tsx`
 2. Add `src/component-name/index.module.scss`
-3. Add entry in `rslib.config.ts`
-4. Add export in `package.json` exports
+3. Add an entry in `rstack.config.ts`
+4. Add an export in `package.json` exports
 5. Create `stories/ComponentName.stories.tsx`
 
 ## External Dependencies

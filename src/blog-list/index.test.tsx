@@ -1,4 +1,4 @@
-import { expect, test } from '@rstest/core';
+import { expect, test } from 'rstack/test';
 import { renderToMarkdownString } from 'react-render-to-markdown';
 import { BlogList, type BlogListItem } from './index';
 

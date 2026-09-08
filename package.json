@@ -81,7 +81,7 @@
     "build": "rs lib",
     "build:watch": "rs lib -w",
     "build-storybook": "storybook build",
-    "bump": "npx bumpp",
+    "bump": "pnpm version -m \"release: v%s\"",
     "check": "rs check",
     "chromatic": "chromatic",
     "dev": "pnpm run storybook",

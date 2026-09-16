@@ -32,28 +32,41 @@
 
 :global {
   html:not(.dark) {
-    --rs-tool-stack-shadow-color: #f9f9f9;
     --rs-tool-stack-title-color: #0b0c0e;
     --rs-tool-stack-desc-color: #8fa1b9;
 
-    --rs-tool-stack-card-stroke: rgba(143, 161, 185, 0.3);
-    --rs-tool-stack-card-gradient: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 1),
-      rgba(249, 249, 249, 0.5)
-    );
+    --rs-tool-stack-brand: #ff8a00;
+    --rs-tool-stack-card-bg: #fff;
+    --rs-tool-stack-card-shadow: 0 4px 16px
+      color-mix(in srgb, var(--rs-tool-stack-brand) 10%, transparent);
+    --rs-tool-stack-card-shadow-hover:
+      0 12px 24px
+        color-mix(in srgb, var(--rs-tool-stack-brand) 14%, transparent),
+      0 0 16px color-mix(in srgb, var(--rs-tool-stack-brand) 10%, transparent);
+    --rs-tool-stack-glow-peak: 0.44;
+    --rs-tool-stack-glow-mid: 0.18;
+    --rs-tool-stack-glow-tail: 0.05;
+    --rs-tool-stack-glow-halo-opacity: 0.24;
+    --rs-tool-stack-surface-glow-peak: 6%;
+    --rs-tool-stack-surface-glow-mid: 2%;
+    --rs-tool-stack-surface-glow-radius: 110px;
     --rs-tools-stack-url-color: #f93920;
   }
   html.dark {
-    --rs-tool-stack-shadow-color: #23272f;
     --rs-tool-stack-title-color: white;
     --rs-tool-stack-desc-color: #8fa1b9;
-    --rs-tool-stack-card-stroke: #23272f;
-    --rs-tool-stack-card-gradient: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0),
-      rgba(255, 255, 255, 0.03)
-    );
+    --rs-tool-stack-brand: #ff8a00;
+    --rs-tool-stack-card-bg: #1b1f27;
+    --rs-tool-stack-card-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    --rs-tool-stack-card-shadow-hover:
+      0 12px 24px rgba(0, 0, 0, 0.45), 0 0 16px rgba(0, 0, 0, 0.3);
+    --rs-tool-stack-glow-peak: 0.56;
+    --rs-tool-stack-glow-mid: 0.25;
+    --rs-tool-stack-glow-tail: 0.08;
+    --rs-tool-stack-glow-halo-opacity: 0.32;
+    --rs-tool-stack-surface-glow-peak: 14%;
+    --rs-tool-stack-surface-glow-mid: 4%;
+    --rs-tool-stack-surface-glow-radius: 110px;
     --rs-tools-stack-url-color: #ff704d;
   }
 }
@@ -67,6 +80,7 @@
 }
 
 .tool {
+  position: relative;
   cursor: pointer;
   text-decoration: none;
 
@@ -77,45 +91,71 @@
 
   flex-direction: column;
   align-items: start;
-  gap: 8px;
+  gap: 16px;
   align-self: stretch;
 
   // style
-  border-radius: 10px;
-  border: 1px solid var(--rs-tool-stack-card-stroke);
-  background: var(--rs-tool-stack-card-gradient);
-  transition: all 0.2s ease-out;
+  border-radius: 16px;
+  background: var(--rs-tool-stack-card-bg);
+  box-shadow: var(--rs-tool-stack-card-shadow);
+  transform: translateY(0) scale(1);
+  transition:
+    transform 0.22s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.22s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform, box-shadow;
 
-  &:hover {
-    transform: scale3d(1.03, 1.03, 1.03);
+  // pointer-tracked surface glow
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      circle var(--rs-tool-stack-surface-glow-radius) at var(--pointer-x, 50%)
+        var(--pointer-y, 50%),
+      color-mix(
+          in srgb,
+          var(--rs-tool-stack-brand) var(--rs-tool-stack-surface-glow-peak),
+          transparent
+        )
+        0%,
+      color-mix(
+          in srgb,
+          var(--rs-tool-stack-brand) var(--rs-tool-stack-surface-glow-mid),
+          transparent
+        )
+        38%,
+      transparent 72%
+    );
+    opacity: var(--pointer-strength, 0);
+    pointer-events: none;
+    transition: opacity 120ms cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   .logo {
+    position: relative;
+    z-index: 1;
     width: 52px;
     height: 52px;
     object-fit: contain;
     flex-shrink: 0;
   }
 
-  .toolContent {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
   .toolTitle {
+    position: relative;
+    z-index: 1;
     color: var(--rs-tool-stack-title-color);
-    text-align: center;
 
     font-size: 19px;
     font-style: normal;
     font-weight: 600;
     line-height: 24px;
-    margin-top: 4px;
   }
 
   .toolDescription {
+    position: relative;
+    z-index: 1;
     color: var(--rs-tool-stack-desc-color);
     text-align: left;
     height: 48px;
@@ -128,6 +168,8 @@
   }
 
   .toolUrl {
+    position: relative;
+    z-index: 1;
     color: var(--rs-tools-stack-url-color);
     font-size: 15px;
     font-style: normal;
@@ -140,8 +182,44 @@
   }
 }
 
-@keyframes rotate {
-  100% {
-    transform: rotate(1turn);
+// pointer-tracked edge glow (SVG strokes)
+.edgeGlow {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 120ms cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: opacity;
+}
+
+.edgeStroke {
+  x: 1px;
+  y: 1px;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  rx: 15px;
+  ry: 15px;
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.edgeHalo {
+  stroke-width: 6px;
+  opacity: var(--rs-tool-stack-glow-halo-opacity);
+}
+
+.edgeLine {
+  stroke-width: 1px;
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tool:hover {
+    transform: translateY(-5px) scale(1.018);
+    box-shadow: var(--rs-tool-stack-card-shadow-hover);
   }
 }

@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import type { StorybookConfig } from 'storybook-react-rsbuild';
@@ -9,6 +10,12 @@ const config: StorybookConfig = {
   rsbuildFinal(config) {
     config.plugins ??= [];
     config.plugins.push(pluginReact(), pluginSass());
+
+    config.resolve ??= {};
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'virtual-social-links': path.join(import.meta.dirname, 'social-links.ts'),
+    };
 
     config.source ??= {};
     config.source.define = {

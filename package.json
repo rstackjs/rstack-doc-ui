@@ -94,7 +94,7 @@
   "devDependencies": {
     "@rsbuild/plugin-react": "2.1.0",
     "@rsbuild/plugin-sass": "2.0.1",
-    "@rspress/core": "^2.0.21",
+    "@rspress/core": "2.1.0-beta.1",
     "@rstackjs/doc-ui": "workspace:*",
     "@storybook/addon-themes": "^10.6.0",
     "@storybook/react": "^10.6.0",
@@ -117,7 +117,7 @@
     "typescript": "~7.0.2"
   },
   "peerDependencies": {
-    "@rspress/core": ">=2.0.0"
+    "@rspress/core": ">=2.0.0 || ^2.1.0-beta.1"
   },
   "peerDependenciesMeta": {
     "@rspress/core": {

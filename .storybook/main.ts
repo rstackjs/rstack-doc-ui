@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import type { StorybookConfig } from 'storybook-react-rsbuild';
@@ -9,6 +10,15 @@ const config: StorybookConfig = {
   rsbuildFinal(config) {
     config.plugins ??= [];
     config.plugins.push(pluginReact(), pluginSass());
+
+    config.resolve ??= {};
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      // Rspress normally generates this module from the site's social links.
+      'virtual-social-links': fileURLToPath(
+        new URL('./social-links.ts', import.meta.url),
+      ),
+    };
 
     config.source ??= {};
     config.source.define = {

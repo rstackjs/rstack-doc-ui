@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { blogPalette } from '../blog-palette';
 
 type CanvasBounds = {
   width: number;
@@ -127,10 +128,16 @@ class Meteor {
     }
 
     const gradient = context.createLinearGradient(startX, startY, endX, endY);
-    gradient.addColorStop(0, `rgba(18, 229, 229, ${this.opacity})`);
-    gradient.addColorStop(0.02, `rgba(18, 229, 229, ${this.opacity * 0.8})`);
-    gradient.addColorStop(0.05, `rgba(255, 53, 26, ${this.opacity * 0.6})`);
-    gradient.addColorStop(1, 'rgba(255, 53, 26, 0)');
+    gradient.addColorStop(0, `rgba(${blogPalette.gold}, ${this.opacity})`);
+    gradient.addColorStop(
+      0.02,
+      `rgba(${blogPalette.gold}, ${this.opacity * 0.8})`,
+    );
+    gradient.addColorStop(
+      0.05,
+      `rgba(${blogPalette.orange}, ${this.opacity * 0.6})`,
+    );
+    gradient.addColorStop(1, `rgba(${blogPalette.orange}, 0)`);
 
     context.beginPath();
     context.strokeStyle = gradient;

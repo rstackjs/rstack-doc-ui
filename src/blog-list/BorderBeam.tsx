@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { blogPalette } from '../blog-palette';
 import styles from './BorderBeam.module.scss';
 
 type ResizeSubscription = {
@@ -14,7 +15,7 @@ export type BorderBeamProps = {
 };
 
 export function BorderBeam({
-  color = '#12e5e5',
+  color = `rgb(${blogPalette.gold})`,
   size = 3,
   duration = 4,
   className,
@@ -130,9 +131,9 @@ export function BorderBeam({
       );
 
       gradient.addColorStop(0, 'transparent');
-      gradient.addColorStop(0.2, 'rgba(255, 53, 26, 0.3)');
-      gradient.addColorStop(0.5, '#ff351a');
-      gradient.addColorStop(0.8, '#ff351a');
+      gradient.addColorStop(0.2, `rgba(${blogPalette.orange}, 0.3)`);
+      gradient.addColorStop(0.5, `rgb(${blogPalette.orange})`);
+      gradient.addColorStop(0.8, `rgb(${blogPalette.orange})`);
       gradient.addColorStop(0.9, color);
       gradient.addColorStop(1, 'transparent');
 

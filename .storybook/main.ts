@@ -14,6 +14,11 @@ const config: StorybookConfig = {
     config.resolve ??= {};
     config.resolve.alias = {
       ...config.resolve.alias,
+      // Rspress has its own React dependency; hooks must use the renderer's instance.
+      react: fileURLToPath(new URL('../node_modules/react', import.meta.url)),
+      'react-dom': fileURLToPath(
+        new URL('../node_modules/react-dom', import.meta.url),
+      ),
       // Rspress normally generates this module from the site's social links.
       'virtual-social-links': fileURLToPath(
         new URL('./social-links.ts', import.meta.url),
